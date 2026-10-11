@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Экспериментальный расчет ЗП</title>
+    <script src="https://telegram.org"></script>
+    <style>
+        :root {
+            --tg-theme-bg-color: #efeff4;
+            --tg-theme-text-color: #000000;
+            --tg-theme-hint-color: #8e8e93;
+            --tg-theme-link-color: #007ee5;
+            --tg-theme-button-color: #50a684;
+            --tg-theme-button-text-color: #ffffff;
+            --tg-theme-secondary-bg-color: #ffffff;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--tg-theme-bg-color);
+            color: var(--tg-theme-text-color);
+            margin: 0;
+            padding: 12px;
+            font-size: 14px;
+        }
+        .tabs {
+            display: flex;
+            background: var(--tg-theme-secondary-bg-color);
+            border-radius: 8px;
+            padding: 2px;
+            margin-bottom: 12px;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 8px;
+            text-align: center;
+            border: none;
+            background: transparent;
+            color: var(--tg-theme-text-color);
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+        .tab-btn.active {
+            background: var(--tg-theme-button-color);
+            color: var(--tg-theme-button-text-color);
+        }
+        .screen { display: none; }
+        .screen.active { display: block; }
+        .card {
+            background: var(--tg-theme-secondary-bg-color);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        h3 { margin-top: 0; margin-bottom: 10px; font-size: 16px; color: var(--tg-theme-button-color); }
+        .kpi-table, .calendar-table, .settings-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+        }
+        .kpi-table th, .kpi-table td {
+            padding: 6px;
+            text-align: center;
+            border: 1px solid var(--tg-theme-bg-color);
+        }
+        .kpi-table th { font-size: 11px; color: var(--tg-theme-hint-color); font-weight: normal; }
+        .calendar-table th { padding: 4px; color: var(--tg-theme-hint-color); font-size: 12px; }
+        .calendar-table td {
+            width: 14.28%;
+            height: 45px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid var(--tg-theme-bg-color);
+            position: relative;
+            font-weight: bold;
+            font-size: 13px;
+        }
+        .day-work { background-color: #ffe0b2; color: #e65100; }
+        .day-off { background-color: #c8e6c9; color: #1b5e20; }
+        .day-extra { background-color: #b3e5fc; color: #01579b; }
+        .settings-table td { padding: 6px 4px; }
+        .settings-table input, .settings-table select {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid var(--tg-theme-bg-color);
+            border-radius: 6px;
+            background: var(--tg-theme-bg-color);
+            color: var(--tg-theme-text-color);
+            box-sizing: border-box;
+        }
+        .btn-main {
+            width: 100%;
+            padding: 10px;
+            background: var(--tg-theme-button-color);
+            color: var(--tg-theme-button-text-color);
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('screen-calendar')">📅 График</button>
+        <button class="tab-btn" onclick="switchTab('screen-calc')">💰 Расчет ЗП</button>
+        <button class="tab-btn" onclick="switchTab('screen-settings')">⚙ Настройки</button>
+    </div>
+
+    <!-- ЭКРАН 1: КАЛЕНДАРЬ -->
+    <div id="screen-calendar" class="screen active">
+        <div class="card">
+            <h3>Октябрь 2026</h3>
+            <table class="kpi-table">
+                <thead>
+                    <tr>
+                        <th>Смены</th>
+                        <th>Часы</th>
+                        <th>Выходные</th>
+                        <th>Доп.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="kpi-shifts">19</td>
+                        <td id="kpi-hours">209</td>
+                        <td id="kpi-offs">12</td>
+                        <td id="kpi-extra">0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <table class="calendar-table">
+                <thead>
+                    <tr>
+                        <th>ПН</th><th>ВТ</th><th>СР</th><th>ЧТ</th><th>ПТ</th><th>СБ</th><th>ВС</th>
+                    </tr>
+                </thead>
+                <tbody id="calendar-body">
+                    <!-- Будет сгенерирован автоматически из JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ЭКРАН 2: РАСЧЕТ ЗАРПЛАТЫ -->
+    <div id="screen-calc" class="screen">
+        <div class="card">
+            <h3>Итоговый расчет за месяц</h3>
+            <table class="settings-table">
+                <tr><td>Отработано часов:</td><td id="calc-hours-fact" style="font-weight:bold;">209 / 160</td></tr>
+                <tr><td>Базовый оклад:</td><td id="calc-base-salary" style="font-weight:bold;">0 ₽</td></tr>
+                <tr><td>Компенсация ГСМ:</td><td id="calc-gsm" style="font-weight:bold;">0 ₽</td></tr>
+                <tr><td>Оплата подключений:</td><td id="calc-connects" style="font-weight:bold;">0 ₽</td></tr>
+                <tr><td>Аренда и бонусы:</td><td id="calc-bonus" style="font-weight:bold;">0 ₽</td></tr>
+                <tr style="border-top: 2px solid var(--tg-theme-button-color);">
+                    <td style="font-size:16px; font-weight:bold; color:var(--tg-theme-button-color);">На руки (87%):</td>
+                    <td id="calc-total-cash" style="font-size:16px; font-weight:bold; color:var(--tg-theme-button-color);">0 ₽</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- ЭКРАН 3: НАСТРОЙКИ -->
+    <div id="screen-settings" class="screen">
+        <div class="card">
+            <h3>⚙️ Финансовые параметры</h3>
+            <table class="settings-table">
+                <tr><td>Оклад за 160 ч, ₽</td><td><input type="number" id="set-base" value="28000"></td></tr>
+                <tr><td>ГСМ за час, ₽</td><td><input type="number" id="set-gsm-rate" value="74"></td></tr>
+                <tr><td>Аренда, ₽</td><td><input type="number" id="set-rent" value="15000"></td></tr>
+                <tr><td>Годовой бонус, ₽</td><td><input type="number" id="set-year-bonus" value="5000"></td></tr>
+                <tr><td>Ставка за подкл., ₽</td><td><input type="number" id="set-conn-base" value="650"></td></tr>
+                <tr><td>Подключения (ед.)</td><td><input type="number" id="set-conn-count" value="25"></td></tr>
+            </table>
+            <button class="btn-main" onclick="saveSettings()">Сохранить настройки</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
