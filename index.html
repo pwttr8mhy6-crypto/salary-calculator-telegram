@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#172b45">
-<title>Календарь смен 3/2</title>
+<title>Экспериментальный метод расчёта ЗП</title>
 <style>
 :root{color-scheme:light;--navy:#183451;--blue:#2e6597;--pale:#edf4fb;--green:#23835c;--greenbg:#e4f5ec;--orange:#b96a18;--orangebg:#fff0dc;--ink:#1e293b;--muted:#64748b;--line:#dce4ed;--bg:#f4f7fb;--white:#fff;--red:#b93838}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}button,input,select{font:inherit}button{cursor:pointer}.app{max-width:1100px;margin:0 auto;padding:18px 14px 40px}.hero{background:linear-gradient(135deg,#173451,#2e6597);color:#fff;border-radius:22px;padding:22px;margin-bottom:16px;box-shadow:0 10px 28px #17345120}.eyebrow{font-size:11px;letter-spacing:.14em;font-weight:800;opacity:.75}.hero h1{margin:7px 0 8px;font-size:clamp(25px,5vw,36px);letter-spacing:-.03em}.hero p{margin:0;color:#e0ebf6;line-height:1.5}.hero-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:17px}.btn{border:1px solid var(--line);background:#fff;color:var(--navy);border-radius:11px;padding:10px 13px;font-weight:700}.btn.primary{background:var(--navy);border-color:var(--navy);color:white}.btn.light{background:#ffffff18;border-color:#ffffff55;color:#fff}.btn.danger{color:var(--red)}.summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:16px}.stat{background:#fff;border:1px solid var(--line);border-radius:15px;padding:14px}.stat .label{font-size:12px;color:var(--muted);font-weight:650}.stat .value{font-size:clamp(22px,4vw,30px);font-weight:800;letter-spacing:-.04em;margin-top:5px;color:var(--navy)}.stat .hint{font-size:11px;color:var(--muted);margin-top:3px}.layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(280px,.8fr);gap:15px;align-items:start}.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 3px 12px #18345108}.monthbar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:15px}.monthbar h2{font-size:21px;margin:0;color:var(--navy);text-transform:capitalize}.nav{display:flex;gap:6px}.nav button{border:1px solid var(--line);background:#fff;border-radius:10px;width:40px;height:38px;color:var(--navy);font-size:20px}.weekdays,.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}.weekdays div{text-align:center;color:var(--muted);font-size:11px;font-weight:800;padding:5px 0}.day{position:relative;min-height:86px;border:1px solid var(--line);border-radius:12px;background:#fff;padding:8px 7px;text-align:left;color:var(--ink);display:flex;flex-direction:column;gap:5px;overflow:hidden}.day:focus-visible{outline:3px solid #76a9dc}.day.empty{border-color:transparent;background:transparent;pointer-events:none}.day .num{font-weight:800;font-size:14px}.day .tag{font-size:10px;line-height:1.25;font-weight:750}.day.work{background:var(--greenbg);border-color:#bce5cf}.day.work .tag{color:var(--green)}.day.off{background:#f2f5f9}.day.off .tag{color:#64748b}.day.extra{background:var(--orangebg);border-color:#f1d2a6}.day.extra .tag{color:var(--orange)}.day.vac-work{background:#d9f3e4;border-color:#16834a;box-shadow:inset 0 0 0 1px #16834a}.day.vac-work .tag{color:#12643a}.day.vac-off{background:#dcecff;border-color:#3978c5;box-shadow:inset 0 0 0 1px #3978c5}.day.vac-off .tag{color:#205b9b}.dot.vac-work{background:#36a269}.dot.vac-off{background:#5798e5}.vacation-panel{margin-top:15px}.vacation-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}.vacation-stat{background:#f4f8fc;border:1px solid var(--line);border-radius:11px;padding:10px}.vacation-stat strong{display:block;font-size:22px;color:var(--navy)}.vacation-stat span{font-size:11px;color:var(--muted)}.day.selected{box-shadow:inset 0 0 0 2px var(--blue);border-color:var(--blue)}.day.manual{outline:1px dashed #64748b;outline-offset:-4px}.day.today .num:after{content:' сегодня';font-size:8px;color:var(--blue);font-weight:700;display:block}.day .hours{font-size:10px;color:#45566c}.legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:13px;font-size:11px;color:var(--muted)}.legend span{display:flex;align-items:center;gap:5px}.dot{width:9px;height:9px;border-radius:3px;display:inline-block}.dot.work{background:#70c99a}.dot.off{background:#cbd5e1}.dot.extra{background:#eab66e}.panel h3{margin:0 0 5px;color:var(--navy);font-size:18px}.sub{font-size:12px;color:var(--muted);line-height:1.45;margin:0 0 14px}.field{display:flex;flex-direction:column;gap:6px;margin:12px 0}.field label{font-size:12px;font-weight:750;color:#475569}.field input,.field select{width:100%;min-height:42px;border:1px solid #cbd5e1;border-radius:10px;padding:9px 10px;background:#fff;color:var(--ink)}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.hours-preview{background:var(--pale);border-radius:12px;padding:12px;margin:13px 0;color:var(--navy)}.hours-preview strong{font-size:22px}.actions{display:flex;flex-wrap:wrap;gap:8px}.status{display:none;margin:12px 0 0;padding:10px 12px;border-radius:10px;background:#e4f5ec;color:#176342;font-size:13px;font-weight:650;line-height:1.4}.status.show{display:block}.status.error{background:#fff0dc;color:#8a4b0a}.divider{height:1px;background:var(--line);margin:17px 0}.info{font-size:12px;color:var(--muted);line-height:1.5}.small{font-size:11px;color:var(--muted)}.mobile-hint{display:none}.footer{text-align:center;color:var(--muted);font-size:11px;margin:18px 0 0}
@@ -22,6 +22,171 @@
 @media(max-width:760px){.settings-tab{padding:0 8px 20px}.settings-grid{grid-template-columns:1fr}}
 @media(max-width:760px){.main-tabs{padding:0 9px}.main-tab{font-size:13px;padding:11px 7px}.salary-tab{padding:0 8px 20px}#salaryFrame{height:2100px;border-radius:12px}}
 @media print{.main-tabs,#salaryTab{display:none!important}#calendarTab{display:block!important}}
+
+
+/* Чистая тема TELKO-inspired: светлая, спокойная, с оранжевым акцентом */
+:root {
+  color-scheme: light;
+  --navy: #263f52;
+  --blue: #e9852b;
+  --pale: #f3f6f8;
+  --green: #277b58;
+  --greenbg: #e8f5ed;
+  --orange: #d9791f;
+  --orangebg: #fff1e2;
+  --ink: #293844;
+  --muted: #71808b;
+  --line: #e1e7eb;
+  --bg: #f4f6f8;
+  --white: #fff;
+  --red: #b93838;
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg) !important;
+  color: var(--ink) !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.app { max-width: 1120px; padding-top: 16px; }
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #263f52 0%, #38596e 100%) !important;
+  border-radius: 18px;
+  border-bottom: 4px solid #e9852b;
+  box-shadow: 0 8px 24px rgba(38, 63, 82, .12);
+}
+.hero h1 { color: #fff !important; }
+.hero p { color: #e7eef2 !important; }
+.stat, .panel {
+  background: #fff !important;
+  border-color: var(--line) !important;
+  border-radius: 16px;
+  box-shadow: 0 3px 14px rgba(38, 56, 68, .045);
+}
+.stat .value, .monthbar h2, .panel h3, .vacation-stat strong {
+  color: var(--navy) !important;
+}
+.btn, .nav button {
+  border-radius: 11px;
+  transition: transform .16s ease, box-shadow .2s ease,
+    background-color .2s ease, border-color .2s ease;
+}
+.btn.primary {
+  background: #e9852b !important;
+  border-color: #e9852b !important;
+  color: #fff !important;
+  box-shadow: 0 3px 8px rgba(233, 133, 43, .18);
+}
+.btn.primary:hover {
+  background: #d9781e !important;
+  box-shadow: 0 5px 12px rgba(233, 133, 43, .24);
+}
+.btn:not(.primary):not(.light):hover,
+.nav button:hover { border-color: #e9852b; }
+button:active, .day:active { transform: scale(.98); }
+input:focus, select:focus, textarea:focus {
+  outline: 0;
+  border-color: #e9852b !important;
+  box-shadow: 0 0 0 3px rgba(233, 133, 43, .14);
+}
+.day.selected {
+  border-color: #e9852b !important;
+  box-shadow: inset 0 0 0 2px #e9852b;
+}
+.day.today .num:after { color: #d9791f; }
+.day.extra { background: #fff5e9; border-color: #f0d2b1; }
+.day.extra .tag { color: #a75d17; }
+.hours-preview { background: #f3f6f8; }
+.status.show { animation: telkoIn .24s ease-out; }
+.hero, .stat, .panel {
+  animation: telkoIn .34s ease-out both;
+}
+.stat:nth-child(2) { animation-delay: .04s; }
+.stat:nth-child(3) { animation-delay: .08s; }
+.stat:nth-child(4) { animation-delay: .12s; }
+@keyframes telkoIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (hover: hover) {
+  .stat:hover, .panel:hover {
+    box-shadow: 0 7px 20px rgba(38, 56, 68, .075);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+
+/* Единый мобильный интерфейс: только оформление, расчёты и данные не меняются */
+:root {
+  --navy: #243b53;
+  --blue: #2f6fed;
+  --pale: #edf4ff;
+  --green: #21845a;
+  --greenbg: #e7f7ee;
+  --orange: #c66a18;
+  --orangebg: #fff2e4;
+  --ink: #243244;
+  --muted: #6b7b8f;
+  --line: #e0e7ef;
+  --bg: #f3f6fb;
+  --white: #fff;
+  --red: #c43d4b;
+}
+html { scroll-behavior: auto; }
+body { background:var(--bg) !important; color:var(--ink); -webkit-text-size-adjust:100%; }
+button, input, select, textarea { font:inherit; }
+button { -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
+.app { max-width:1120px; padding-top:14px; }
+.hero { border-radius:20px; background:linear-gradient(135deg,#243b53,#365d7a) !important; border-bottom:4px solid #f29a38; box-shadow:0 8px 24px rgba(36,59,83,.12); }
+.panel,.stat,.vacation-stat { box-shadow:0 3px 14px rgba(36,59,83,.045); border-color:var(--line); }
+.panel { border-radius:18px; }
+.stat { border-radius:15px; }
+.main-tabs { position:sticky; top:0; z-index:20; padding-top:8px; padding-bottom:8px; background:rgba(243,246,251,.96); backdrop-filter:blur(12px); }
+.main-tab { min-height:46px; border-radius:13px; border:1px solid var(--line); background:#fff; color:var(--navy); padding:11px 10px; font-size:14px; font-weight:750; transition:background-color .16s ease,border-color .16s ease,transform .16s ease; }
+.main-tab.active { background:var(--navy); border-color:var(--navy); color:#fff; }
+.btn,.nav button,.settings-tab button { min-height:42px; border-radius:12px; font-weight:700; transition:background-color .16s ease,border-color .16s ease,opacity .16s ease; }
+.btn.primary { background:var(--navy); border-color:var(--navy); }
+.btn:active,.main-tab:active,.nav button:active { transform:scale(.985); }
+.field input,.field select,.settings-tab .field input,.settings-tab .field select { min-height:46px; border-radius:12px; border-color:#d4deea; padding:10px 12px; font-size:16px; }
+input:focus,select:focus,textarea:focus { outline:2px solid #8bb4ff; outline-offset:1px; border-color:#6d9df5 !important; }
+.day { border-radius:11px; }
+#salaryFrame { background:var(--bg); border-radius:16px; }
+.salary-tab,.settings-tab { scroll-margin-top:64px; }
+[hidden] { display:none !important; }
+@media(max-width:760px) {
+  .app { padding:8px 8px 24px; }
+  .hero { padding:17px; border-radius:17px; margin-bottom:12px; }
+  .hero h1 { font-size:clamp(23px,6vw,31px); line-height:1.12; }
+  .main-tabs { gap:6px; margin-top:8px; padding:8px 8px; }
+  .main-tab { min-height:46px; padding:9px 5px; font-size:12px; line-height:1.2; }
+  .salary-tab { padding:0 8px 22px; }
+  .settings-tab { padding:0 8px 22px; }
+  .panel { padding:12px; border-radius:15px; }
+  .summary { gap:8px; }
+  .stat { padding:11px; }
+  .stat .value { font-size:clamp(20px,5.7vw,27px); }
+  .field { margin:10px 0; }
+  .field input,.field select,.settings-tab .field input,.settings-tab .field select { min-height:46px; font-size:16px; }
+  .hero-actions .btn { flex:1 1 auto; }
+  #salaryFrame { height:1900px; border-radius:13px; }
+}
+@media(max-width:380px) {
+  .main-tab { font-size:11px; }
+  .day { min-height:59px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after { transition:none !important; animation:none !important; }
+}
 
 </style>
 </head>
@@ -494,7 +659,7 @@ const calendarTab=document.getElementById('calendarTab'), salaryTab=document.get
 const calendarTabBtn=document.getElementById('calendarTabBtn'), salaryTabBtn=document.getElementById('salaryTabBtn'), settingsTabBtn=document.getElementById('settingsTabBtn');
 const salaryFrame=document.getElementById('salaryFrame');
 function salarySettingsPayload(){return {...state.salarySettings}}
-function switchTab(which){const salary=which==='salary',settings=which==='settings';calendarTab.hidden=salary||settings;salaryTab.hidden=!salary;settingsTab.hidden=!settings;calendarTabBtn.classList.toggle('active',!salary&&!settings);salaryTabBtn.classList.toggle('active',salary);settingsTabBtn.classList.toggle('active',settings);if(salary){if(salaryFrame.contentWindow){salaryFrame.contentWindow.postMessage({type:'salary-settings',values:salarySettingsPayload()},'*');salaryFrame.contentWindow.postMessage({type:'shift-hours',hours:monthMinutes(viewYear,viewMonth)/60,period:`${viewYear}-${pad(viewMonth+1)}`},'*')}window.scrollTo({top:0,behavior:'smooth'})}else if(settings){syncSettingsForm();if(salaryFrame.contentWindow)salaryFrame.contentWindow.postMessage({type:'get-salary-values'},'*');window.scrollTo({top:0,behavior:'smooth'})}}
+function switchTab(which){const salary=which==='salary',settings=which==='settings';calendarTab.hidden=salary||settings;salaryTab.hidden=!salary;settingsTab.hidden=!settings;calendarTabBtn.classList.toggle('active',!salary&&!settings);salaryTabBtn.classList.toggle('active',salary);settingsTabBtn.classList.toggle('active',settings);if(salary){if(salaryFrame.contentWindow){salaryFrame.contentWindow.postMessage({type:'salary-settings',values:salarySettingsPayload()},'*');salaryFrame.contentWindow.postMessage({type:'shift-hours',hours:monthMinutes(viewYear,viewMonth)/60,period:`${viewYear}-${pad(viewMonth+1)}`},'*')}}else if(settings){syncSettingsForm();if(salaryFrame.contentWindow)salaryFrame.contentWindow.postMessage({type:'get-salary-values'},'*');}}
 function monthMinutes(year,month){let total=0;const last=new Date(year,month+1,0).getDate();for(let day=1;day<=last;day++){const d=new Date(year,month,day);if(!vacationDay(d))total+=dayData(d).mins}return total}
 calendarTabBtn.addEventListener('click',()=>switchTab('calendar'));salaryTabBtn.addEventListener('click',()=>switchTab('salary'));settingsTabBtn.addEventListener('click',()=>switchTab('settings'));
 $('toSalaryBtn').addEventListener('click',()=>{switchTab('salary');const payload={type:'shift-hours',hours:monthMinutes(viewYear,viewMonth)/60,period:`${viewYear}-${pad(viewMonth+1)}`};salaryFrame.contentWindow.postMessage(payload,'*')});
