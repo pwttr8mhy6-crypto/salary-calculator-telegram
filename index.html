@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#172b45">
+<title>Календарь смен 3/2</title>
+<style>
+:root{color-scheme:light;--navy:#183451;--blue:#2e6597;--pale:#edf4fb;--green:#23835c;--greenbg:#e4f5ec;--orange:#b96a18;--orangebg:#fff0dc;--ink:#1e293b;--muted:#64748b;--line:#dce4ed;--bg:#f4f7fb;--white:#fff;--red:#b93838}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}button,input,select{font:inherit}button{cursor:pointer}.app{max-width:1100px;margin:0 auto;padding:18px 14px 40px}.hero{background:linear-gradient(135deg,#173451,#2e6597);color:#fff;border-radius:22px;padding:22px;margin-bottom:16px;box-shadow:0 10px 28px #17345120}.eyebrow{font-size:11px;letter-spacing:.14em;font-weight:800;opacity:.75}.hero h1{margin:7px 0 8px;font-size:clamp(25px,5vw,36px);letter-spacing:-.03em}.hero p{margin:0;color:#e0ebf6;line-height:1.5}.hero-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:17px}.btn{border:1px solid var(--line);background:#fff;color:var(--navy);border-radius:11px;padding:10px 13px;font-weight:700}.btn.primary{background:var(--navy);border-color:var(--navy);color:white}.btn.light{background:#ffffff18;border-color:#ffffff55;color:#fff}.btn.danger{color:var(--red)}.summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:16px}.stat{background:#fff;border:1px solid var(--line);border-radius:15px;padding:14px}.stat .label{font-size:12px;color:var(--muted);font-weight:650}.stat .value{font-size:clamp(22px,4vw,30px);font-weight:800;letter-spacing:-.04em;margin-top:5px;color:var(--navy)}.stat .hint{font-size:11px;color:var(--muted);margin-top:3px}.layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(280px,.8fr);gap:15px;align-items:start}.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 3px 12px #18345108}.monthbar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:15px}.monthbar h2{font-size:21px;margin:0;color:var(--navy);text-transform:capitalize}.nav{display:flex;gap:6px}.nav button{border:1px solid var(--line);background:#fff;border-radius:10px;width:40px;height:38px;color:var(--navy);font-size:20px}.weekdays,.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}.weekdays div{text-align:center;color:var(--muted);font-size:11px;font-weight:800;padding:5px 0}.day{position:relative;min-height:86px;border:1px solid var(--line);border-radius:12px;background:#fff;padding:8px 7px;text-align:left;color:var(--ink);display:flex;flex-direction:column;gap:5px;overflow:hidden}.day:focus-visible{outline:3px solid #76a9dc}.day.empty{border-color:transparent;background:transparent;pointer-events:none}.day .num{font-weight:800;font-size:14px}.day .tag{font-size:10px;line-height:1.25;font-weight:750}.day.work{background:var(--greenbg);border-color:#bce5cf}.day.work .tag{color:var(--green)}.day.off{background:#f2f5f9}.day.off .tag{color:#64748b}.day.extra{background:var(--orangebg);border-color:#f1d2a6}.day.extra .tag{color:var(--orange)}.day.vac-work{background:#d9f3e4;border-color:#16834a;box-shadow:inset 0 0 0 1px #16834a}.day.vac-work .tag{color:#12643a}.day.vac-off{background:#dcecff;border-color:#3978c5;box-shadow:inset 0 0 0 1px #3978c5}.day.vac-off .tag{color:#205b9b}.dot.vac-work{background:#36a269}.dot.vac-off{background:#5798e5}.vacation-panel{margin-top:15px}.vacation-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}.vacation-stat{background:#f4f8fc;border:1px solid var(--line);border-radius:11px;padding:10px}.vacation-stat strong{display:block;font-size:22px;color:var(--navy)}.vacation-stat span{font-size:11px;color:var(--muted)}.day.selected{box-shadow:inset 0 0 0 2px var(--blue);border-color:var(--blue)}.day.manual{outline:1px dashed #64748b;outline-offset:-4px}.day.today .num:after{content:' сегодня';font-size:8px;color:var(--blue);font-weight:700;display:block}.day .hours{font-size:10px;color:#45566c}.legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:13px;font-size:11px;color:var(--muted)}.legend span{display:flex;align-items:center;gap:5px}.dot{width:9px;height:9px;border-radius:3px;display:inline-block}.dot.work{background:#70c99a}.dot.off{background:#cbd5e1}.dot.extra{background:#eab66e}.panel h3{margin:0 0 5px;color:var(--navy);font-size:18px}.sub{font-size:12px;color:var(--muted);line-height:1.45;margin:0 0 14px}.field{display:flex;flex-direction:column;gap:6px;margin:12px 0}.field label{font-size:12px;font-weight:750;color:#475569}.field input,.field select{width:100%;min-height:42px;border:1px solid #cbd5e1;border-radius:10px;padding:9px 10px;background:#fff;color:var(--ink)}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.hours-preview{background:var(--pale);border-radius:12px;padding:12px;margin:13px 0;color:var(--navy)}.hours-preview strong{font-size:22px}.actions{display:flex;flex-wrap:wrap;gap:8px}.status{display:none;margin:12px 0 0;padding:10px 12px;border-radius:10px;background:#e4f5ec;color:#176342;font-size:13px;font-weight:650;line-height:1.4}.status.show{display:block}.status.error{background:#fff0dc;color:#8a4b0a}.divider{height:1px;background:var(--line);margin:17px 0}.info{font-size:12px;color:var(--muted);line-height:1.5}.small{font-size:11px;color:var(--muted)}.mobile-hint{display:none}.footer{text-align:center;color:var(--muted);font-size:11px;margin:18px 0 0}
+@media(max-width:760px){.app{padding:10px 9px 28px}.hero{padding:18px;border-radius:17px}.summary{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.stat{padding:12px}.layout{grid-template-columns:1fr}.panel{padding:12px}.day{min-height:70px;padding:6px 4px;border-radius:9px;gap:4px}.day .num{font-size:13px}.day .tag{font-size:9px}.day .hours{font-size:9px}.weekdays,.calendar{gap:4px}.monthbar h2{font-size:18px}.mobile-hint{display:block}.hero-actions .btn{flex:1}.calendar-panel{padding:10px}}
+@media(max-width:380px){.day{min-height:61px}.day .tag{font-size:8px}.day .hours{font-size:8px}.weekdays div{font-size:10px}}
+@media print{body{background:white}.app{max-width:none;padding:0}.hero{background:#fff!important;color:#172b45;border:1px solid #ccd6e2;box-shadow:none;padding:14px}.hero p{color:#475569}.hero-actions,.nav,.editor,.footer,.mobile-hint{display:none!important}.summary{grid-template-columns:repeat(4,1fr)}.layout{display:block}.calendar-panel{box-shadow:none;border:1px solid #ccd6e2;page-break-inside:avoid}.day{min-height:62px;print-color-adjust:exact;-webkit-print-color-adjust:exact}.panel{box-shadow:none}.calendar{gap:3px}.day .hours{font-size:9px}}
+
+.main-tabs{display:flex;gap:8px;max-width:1100px;margin:12px auto 0;padding:0 14px}
+.main-tab{flex:1;border:1px solid #dce4ed;background:#fff;color:#183451;border-radius:12px;padding:12px;font-weight:800}
+.main-tab.active{background:#183451;color:#fff;border-color:#183451}
+.salary-tab{max-width:1100px;margin:0 auto;padding:0 14px 28px}
+#salaryFrame{display:block;width:100%;height:1700px;border:0;border-radius:16px;background:#f4f6fa}
+.annual-stat{border-color:#bfd8ef;background:#f7fbff}
+.settings-tab{max-width:1100px;margin:0 auto;padding:0 14px 30px}.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.settings-tab .panel{margin-bottom:14px}.settings-tab h2{margin:0 0 8px;color:var(--navy);font-size:20px}.settings-tab .field{margin:12px 0}.settings-tab .field input,.settings-tab .field select{width:100%;min-height:42px;border:1px solid #cbd5e1;border-radius:10px;padding:9px 10px;background:#fff;color:var(--ink)}.settings-tab .note{font-size:12px;color:var(--muted);line-height:1.5}.settings-tab .settings-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+@media(max-width:760px){.settings-tab{padding:0 8px 20px}.settings-grid{grid-template-columns:1fr}}
+@media(max-width:760px){.main-tabs{padding:0 9px}.main-tab{font-size:13px;padding:11px 7px}.salary-tab{padding:0 8px 20px}#salaryFrame{height:2100px;border-radius:12px}}
+@media print{.main-tabs,#salaryTab{display:none!important}#calendarTab{display:block!important}}
+
+</style>
+</head>
+<body>
+<nav class="main-tabs" aria-label="Разделы">
+  <button type="button" class="main-tab active" id="calendarTabBtn">📅 Календарь смен</button>
+  <button type="button" class="main-tab" id="salaryTabBtn">₽ Расчёт зарплаты</button>
+  <button type="button" class="main-tab" id="settingsTabBtn">⚙️ Настройки</button>
+</nav>
+<div id="calendarTab">
+<div class="app">
+<header class="hero">
+  <div class="eyebrow">ПЛАНИРОВАНИЕ РАБОТЫ</div>
+  <h1 id="calendarHeading">Календарь смен 3/2</h1>
+  <p id="calendarDescription">Три рабочих дня, два выходных. Смена с 09:00 до 21:00, обед — 1 час, итого 11 рабочих часов.</p>
+  <div class="hero-actions">
+    <button type="button" class="btn light" id="todayBtn">Текущий месяц</button>
+    <button type="button" class="btn light" id="printBtn">Печать / сохранить PDF</button>
+    <button type="button" class="btn light" id="icsBtn">В календарь iPhone (.ics)</button>
+    <button type="button" class="btn light" id="csvBtn">Экспорт CSV</button><button type="button" class="btn light" id="toSalaryBtn">Часы месяца → в зарплату</button>
+  </div>
+</header>
+<section class="summary" aria-label="Итоги месяца">
+  <div class="stat"><div class="label">Рабочие смены</div><div class="value" id="shiftCount">19</div><div class="hint">за выбранный месяц</div></div>
+  <div class="stat"><div class="label">Отработано часов</div><div class="value" id="hourCount">209</div><div class="hint">с учётом обеда</div></div>
+  <div class="stat"><div class="label">Выходные</div><div class="value" id="offCount">12</div><div class="hint">дней без смены</div></div>
+  <div class="stat"><div class="label">Дополнительные смены</div><div class="value" id="extraCount">0</div><div class="hint">вне графика</div></div>
+  <div class="stat annual-stat"><div class="label">Часы за весь год</div><div class="value" id="annualHourCount">—</div><div class="hint" id="annualYearHint">с учётом изменений и доп. смен</div></div>
+</section>
+<div class="layout">
+  <section class="panel calendar-panel">
+    <div class="monthbar"><button type="button" class="nav" id="prevBtn" aria-label="Предыдущий месяц">‹</button><h2 id="monthTitle">Октябрь 2026</h2><div class="nav"><button type="button" id="nextBtn" aria-label="Следующий месяц">›</button></div></div>
+    <div class="weekdays"><div>ПН</div><div>ВТ</div><div>СР</div><div>ЧТ</div><div>ПТ</div><div>СБ</div><div>ВС</div></div>
+    <div class="calendar" id="calendar"><div class="day empty" aria-hidden="true"></div><div class="day empty" aria-hidden="true"></div><div class="day empty" aria-hidden="true"></div><button type="button" class="day work" data-date="2026-10-01" aria-label="1 Рабочая"><span class="num">1</span><span class="tag">Рабочая</span><span class="hours">11 ч</span></button><button type="button" class="day work" data-date="2026-10-02" aria-label="2 Рабочая"><span class="num">2</span><span class="tag">Рабочая</span><span class="hours">11 ч</span></button><button type="button" class="day work" data-date="2026-10-03" aria-label="3 Рабочая"><span class="num">3</span><span class="tag">Рабочая</span><span class="hours">11 ч</span></button><button type="button" class="day off" data-date="2026-10-04" aria-label="4 Выходной"><span class="num">4</span><span class="tag">Выходной</span></button><button type="button" class="day off" data-date="2026-10-05" aria-label="5 Выходной"><span class="num">5</span><span class="tag">Выходной</span></button><button type="button" class="day work" data-date="2026-10-06" aria-label="6 Рабочая"><span class="num">6</span><span class="tag">Рабочая</span><span class="hours">11 ч</span></button><button type="button" class="day work" data-date="2026-10-07" aria-label="7 Рабочая"><span class="num">7</span><span class="tag">Рабочая</span><span class="hours">11 ч</span></button><button type="button" class="day work" data-date="2026-10-08" aria-label="8 Рабочая"><span class="num">8</span><span class="tag">Рабочая</span><span class="hours">11 ч</span></button><button type="button" class="day off" data-date="2026-10-09" aria-label="9 Выходной"><span class="num">9</span><span class="tag">Выходной</span></button><button type="button" class="day off" data-date="2026-10-10" aria-label="10 Выходной"><span class="num">10</span><span class="tag">Выходной</span></button><button type="button" class="day work" data-date="2026-10-11" aria-label="11 Рабочая"><span class="num">11</span><span class="tag">Рабочая</span><span class="hours">11 ч</span></button><button type="button" class="day work" data-date="2026-10-12" aria-label="12 Рабочая"><span class="num">12</span><span class="tag">Рабочая</span><span class="hours">11 ч</span></button><button type="button" class="day work" data-date="2026-10-13" aria-label="13 Рабочая"><span class="num">13</span><span class="tag">Рабочая</span><span class="hours">11 ч</span></button><button type="button" class="day off" data-date="2026-10-14" aria-label="14 Выходной"><span class="num">14</span><span class="tag">Выходной</span></button><button type="button" class="day off" data-date="2026-10-15" aria-label="15 Выходной"><span class="num">15</span><span class="tag">Выходной</span></button><button type="button" class="day work" data-date="2026-10-16" aria-label="16 Рабочая"><span class="num">16</span><span class="tag">Рабочая</span><span class="hours">11 ч</span></button><button type="button" class="day work" data-date="2026-10-17" aria-label="17 Рабочая"><span class="num">17</span><span class="tag">Рабочая</span><span class="hours">11 ч</span></button><button type="button" class="day work" data-date="2026-10-18" aria-label="18 Рабочая"><span class="num">18</span><span class="tag">Рабочая</span><span class="hours">11 ч</span></button><button type="button" class="day off" data-date="2026-10-19" aria-label="19 Выходной"><span class="num">19</span><span class="tag">Выходной</span></button><button type="button" class="day off" data-date="2026-10-20" aria-label="20 Выходной"><span class="num">20</span><span class="tag">Выходной</span></button><button type="button" class="day work" data-date="2026-10-21" aria-label="21 Рабочая"><span class="num">21</span><span class="tag">Рабочая</span><span class="hours">11 ч</span></button><button type="button" class="day work" data-date="2026-10-22" aria-label="22 Рабочая"><span class="num">22</span><span class="tag">Рабочая</span><span class="hours">11 ч</span></button><button type="button" class="day work" data-date="2026-10-23" aria-label="23 Рабочая"><span class="num">23</span><span class="tag">Рабочая</span><span class="hours">11 ч</span></button><button type="button" class="day off" data-date="2026-10-24" aria-label="24 Выходной"><span class="num">24</span><span class="tag">Выходной</span></button><button type="button" class="day off" data-date="2026-10-25" aria-label="25 Выходной"><span class="num">25</span><span class="tag">Выходной</span></button><button type="button" class="day work" data-date="2026-10-26" aria-label="26 Рабочая"><span class="num">26</span><span class="tag">Рабочая</span><span class="hours">11 ч</span></button><button type="button" class="day work" data-date="2026-10-27" aria-label="27 Рабочая"><span class="num">27</span><span class="tag">Рабочая</span><span class="hours">11 ч</span></button><button type="button" class="day work" data-date="2026-10-28" aria-label="28 Рабочая"><span class="num">28</span><span class="tag">Рабочая</span><span class="hours">11 ч</span></button><button type="button" class="day off" data-date="2026-10-29" aria-label="29 Выходной"><span class="num">29</span><span class="tag">Выходной</span></button><button type="button" class="day off" data-date="2026-10-30" aria-label="30 Выходной"><span class="num">30</span><span class="tag">Выходной</span></button><button type="button" class="day work" data-date="2026-10-31" aria-label="31 Рабочая"><span class="num">31</span><span class="tag">Рабочая</span><span class="hours">11 ч</span></button></div>
+    <div class="legend"><span><i class="dot work"></i>Рабочая смена</span><span><i class="dot off"></i>Выходной</span><span><i class="dot extra"></i>Дополнительная смена</span></div>
+    <section class="panel vacation-panel" style="background:#fbfdff;box-shadow:none">
+      <h3>🏖️ Планирование отпуска</h3>
+      <p class="sub">Выбери даты начала и окончания. В календаре рабочие дни отпуска и выходные по графику будут выделены разными цветами.</p>
+      <div class="two"><div class="field"><label for="vacStart">Первый день отпуска</label><input type="date" id="vacStart"></div><div class="field"><label for="vacEnd">Последний день отпуска</label><input type="date" id="vacEnd"></div></div>
+      <div class="actions"><button type="button" class="btn primary" id="saveVacation">Показать отпуск</button><button type="button" class="btn" id="clearVacation">Убрать отпуск</button></div>
+      <div class="vacation-stats"><div class="vacation-stat"><strong id="vacTotal">0</strong><span>календарных дней</span></div><div class="vacation-stat"><strong id="vacWork">0</strong><span>рабочих смен</span></div><div class="vacation-stat"><strong id="vacOff">0</strong><span>выходных по графику</span></div></div>
+      <div class="legend"><span><i class="dot vac-work"></i>Отпуск в рабочую смену</span><span><i class="dot vac-off"></i>Отпуск в выходной</span></div>
+      <p class="small" id="vacMessage">Выбери период отпуска и нажми «Показать отпуск».</p>
+    </section>
+    <p class="info mobile-hint">Нажми на любую дату, чтобы изменить смену или добавить дополнительную.</p>
+  </section>
+  <aside class="panel editor" id="editor">
+    <h3 id="editorTitle">Смена на выбранную дату</h3>
+    <p class="sub" id="editorDate">Выбери день в календаре</p><p class="small" id="autoSaveHint">Изменения применяются к календарю сразу после выбора типа дня; кнопку ниже тоже можно использовать для подтверждения.</p>
+    <div class="field"><label for="dayType">Тип дня</label><select id="dayType"><option value="auto" id="autoScheduleOption">По графику 3/2</option><option value="work">Рабочая смена</option><option value="off">Выходной</option><option value="extra">Дополнительная смена</option></select></div>
+    <div class="two">
+      <div class="field"><label for="startTime">Начало</label><input type="time" id="startTime" value="09:00"></div>
+      <div class="field"><label for="endTime">Окончание</label><input type="time" id="endTime" value="21:00"></div>
+    </div>
+    <div class="field"><label for="lunch">Обед, минут</label><input type="number" id="lunch" min="0" max="360" step="5" value="60"></div>
+    <div class="hours-preview"><div class="small">Рабочее время за выбранный день</div><strong id="dayHours">11 ч</strong><div class="small" id="dayHoursDetail">12 часов на месте минус 1 час обеда</div></div>
+    <div class="actions"><button type="button" class="btn primary" id="saveDay">Сохранить день</button><button type="button" class="btn" id="resetDay">Сбросить</button></div><p class="status" id="statusMessage" role="status" aria-live="polite"></p>
+    <div class="divider"></div>
+    <h3>Настройка цикла</h3>
+    <p class="sub">Выбери дату, которая считается первым рабочим днём цикла. Календарь рассчитает график и назад, и вперёд.</p>
+    <div class="field"><label for="cycleStart">Первый рабочий день</label><input type="date" id="cycleStart" value="2026-10-11"></div>
+    <button class="btn" id="saveCycle">Применить график</button>
+    <div class="divider"></div>
+    <p class="info">Изменения сохраняются в этом браузере на устройстве. Для переноса смен на iPhone нажми «В календарь iPhone (.ics)», затем открой скачанный файл и добавь события в приложение «Календарь». Для переноса таблицы используй CSV или PDF. Ручные изменения дат имеют приоритет над циклом 3/2.</p>
+  </aside>
+</div>
+<div class="footer">Личный календарь для учёта смен. Не является официальным табелем работодателя.</div>
+</div>
+</div>
+<section id="settingsTab" class="settings-tab" hidden>
+  <div class="app" style="padding-top:10px">
+    <header class="hero"><div class="eyebrow">ПЕРСОНАЛЬНЫЕ ПАРАМЕТРЫ</div><h1>Настройки калькулятора</h1><p>Здесь меняются график, длительность смены и исходные параметры зарплаты. Настройки сохраняются на этом устройстве.</p></header>
+    <div class="settings-grid">
+      <section class="panel">
+        <h2>📅 График работы</h2>
+        <p class="sub">Выбери готовый цикл или укажи собственное количество рабочих дней и выходных.</p>
+        <div class="field"><label for="cfgPreset">Тип графика</label><select id="cfgPreset"><option value="3/2">3 рабочих / 2 выходных</option><option value="5/2">5 рабочих / 2 выходных</option><option value="2/2">2 рабочих / 2 выходных</option><option value="4/2">4 рабочих / 2 выходных</option><option value="custom">Свой график</option></select></div>
+        <div class="two"><div class="field"><label for="cfgWorkDays">Рабочих дней подряд</label><input id="cfgWorkDays" type="number" min="1" max="31" value="3"></div><div class="field"><label for="cfgOffDays">Выходных подряд</label><input id="cfgOffDays" type="number" min="1" max="31" value="2"></div></div>
+        <div class="field"><label for="cfgCycleStart">Первый рабочий день цикла</label><input id="cfgCycleStart" type="date" value="2026-10-11"></div>
+        <div class="divider"></div>
+        <h2>⏱️ Время смены</h2>
+        <div class="two"><div class="field"><label for="cfgStartTime">Начало смены</label><input id="cfgStartTime" type="time" value="09:00"></div><div class="field"><label for="cfgEndTime">Окончание смены</label><input id="cfgEndTime" type="time" value="21:00"></div></div>
+        <div class="field"><label for="cfgLunch">Перерыв на обед, минут</label><input id="cfgLunch" type="number" min="0" max="600" step="5" value="60"></div>
+        <p class="note">Часы считаются как время между началом и окончанием минус перерыв. Ручные изменения конкретных дней сохраняются отдельно и имеют приоритет над циклом.</p>
+      </section>
+      <section class="panel">
+        <h2>₽ Параметры расчёта зарплаты</h2>
+        <p class="sub">Эти значения станут начальными для калькулятора. Их также можно менять прямо на вкладке «Расчёт зарплаты».</p>
+        <div class="field"><label for="cfgSalaryRate">Оклад за 160 часов, ₽</label><input id="cfgSalaryRate" type="number" min="0" step="100" value="28000"></div>
+        <div class="field"><label for="cfgFuelRate">Компенсация ГСМ за час, ₽</label><input id="cfgFuelRate" type="number" min="0" step="1" value="74"></div>
+        <div class="field"><label for="cfgRent">Аренда, ₽</label><input id="cfgRent" type="number" min="0" step="100" value="15000"></div>
+        <div class="field"><label for="cfgYearBonus">Годовой бонус, ₽</label><input id="cfgYearBonus" type="number" min="0" step="100" value="5000"></div>
+        <div class="field"><label for="cfgTakeHomeRate">Коэффициент «на руки», %</label><input id="cfgTakeHomeRate" type="number" min="0" max="100" step="1" value="87"></div>
+        <div class="field"><label for="cfgBonusRate">Процент бонуса за лучший месяц, %</label><input id="cfgBonusRate" type="number" min="0" max="100" step="0.5" value="10"></div>
+        <div class="field"><label for="cfgBonus">Бонус за лучший месяц</label><select id="cfgBonus"><option value="no">Нет</option><option value="yes">Да</option></select></div>
+        <div class="field"><label for="cfgDeal">Сделка, ₽</label><input id="cfgDeal" type="number" min="0" step="1" value="0"></div>
+        <div class="two"><div class="field"><label for="cfgFuelCard">Бензиновая карта, ₽</label><input id="cfgFuelCard" type="number" min="0" step="1" value="0"></div><div class="field"><label for="cfgFirstPay">Выплата 25-го, ₽</label><input id="cfgFirstPay" type="number" min="0" step="1" value="0"></div></div>
+        <div class="two"><div class="field"><label for="cfgSolo">Подключения в одиночку</label><input id="cfgSolo" type="number" min="0" step="1" value="0"></div><div class="field"><label for="cfgPair">Подключения вдвоём</label><input id="cfgPair" type="number" min="0" step="1" value="0"></div></div>
+        <div class="divider"></div><h2>Правила оплаты подключений</h2>
+        <div class="field"><label for="cfgNormHours">Норма часов для полного оклада</label><input id="cfgNormHours" type="number" min="1" step="1" value="160"></div>
+        <div class="two"><div class="field"><label for="cfgSoloCoeff">Коэффициент одиночного подключения</label><input id="cfgSoloCoeff" type="number" min="0" step="0.1" value="1"></div><div class="field"><label for="cfgPairCoeff">Коэффициент подключения вдвоём</label><input id="cfgPairCoeff" type="number" min="0" step="0.1" value="0.5"></div></div>
+        <div class="field"><label for="cfgBaseRate">Базовая ставка за единицу плана, ₽</label><input id="cfgBaseRate" type="number" min="0" step="10" value="650"></div>
+        <div class="two"><div class="field"><label for="cfgThreshold1">Порог 1 (единиц)</label><input id="cfgThreshold1" type="number" min="0" step="0.5" value="24"></div><div class="field"><label for="cfgAdd1">Доплата при пороге 1, ₽/ед.</label><input id="cfgAdd1" type="number" min="0" step="10" value="100"></div></div>
+        <div class="two"><div class="field"><label for="cfgThreshold2">Порог 2 (единиц)</label><input id="cfgThreshold2" type="number" min="0" step="0.5" value="34"></div><div class="field"><label for="cfgAdd2">Доплата при пороге 2, ₽/ед.</label><input id="cfgAdd2" type="number" min="0" step="10" value="150"></div></div>
+        <div class="settings-actions"><button type="button" class="btn primary" id="saveSettings">Сохранить настройки</button><button type="button" class="btn" id="resetSettings">Сбросить настройки</button></div>
+        <p class="note" id="settingsMessage">Настройки сохраняются автоматически после нажатия кнопки.</p>
+      </section>
+    </div>
+    <section class="panel" style="margin-top:14px">
+      <h2>⏰ Будильник по графику</h2>
+      <p class="sub">В Android-приложении можно включить уведомление со звуком перед каждой рабочей сменой. Выходные и отпуск пропускаются.</p>
+      <div class="field"><label><input id="cfgAlarmEnabled" type="checkbox" style="width:auto;min-height:auto;margin-right:8px"> Включить напоминания перед сменой (Android)</label></div>
+      <div class="field"><label for="cfgAlarmLead">За сколько минут до начала смены</label><select id="cfgAlarmLead"><option value="5">За 5 минут</option><option value="15">За 15 минут</option><option value="30" selected>За 30 минут</option><option value="45">За 45 минут</option><option value="60">За 1 час</option><option value="90">За 1 час 30 минут</option><option value="120">За 2 часа</option></select></div>
+      <p class="note">На Android нужно разрешить уведомления и, если система попросит, точные будильники. Для iPhone используй кнопку «В календарь iPhone (.ics)» — в события будут добавлены напоминания.</p>
+      <div class="settings-actions"><button type="button" class="btn primary" id="saveAlarmSettings">Сохранить настройки будильника</button><button type="button" class="btn" id="testAlarmBtn">Проверить уведомление</button></div>
+      <p class="note" id="alarmMessage">Будильник выключен.</p>
+    </section>
+  </div>
+</section>
+<section id="salaryTab" class="salary-tab" hidden>
+  <iframe id="salaryFrame" title="Калькулятор зарплаты" loading="eager" sandbox="allow-scripts allow-forms allow-modals allow-downloads" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;ru&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;title&gt;Калькулятор зарплаты&lt;/title&gt;
+&lt;style&gt;
+:root { color-scheme: light dark; --bg: light-dark(#f4f6fa,#10141c); --panel: light-dark(#ffffff,#1b2230); --text: light-dark(#182230,#edf2fa); --muted: light-dark(#687386,#a9b4c7); --border: light-dark(#dfe5ee,#303a4c); --accent: light-dark(#2563eb,#78a6ff); --input: light-dark(#fffdf0,#252b38); --green: light-dark(#e8f7ef,#173c2b); }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--text); font:16px/1.45 system-ui,-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,sans-serif; }
+main { max-width:1000px; margin:0 auto; padding:24px 16px 40px; }
+header { margin-bottom:22px; }
+h1 { font-size:clamp(25px,4vw,36px); line-height:1.15; margin:0 0 8px; letter-spacing:-.5px; }
+.subtitle { color:var(--muted); margin:0; }
+.layout { display:grid; grid-template-columns:1.15fr .85fr; gap:16px; align-items:start; }
+.panel { background:var(--panel); border:1px solid var(--border); border-radius:18px; padding:20px; box-shadow:0 5px 18px #00000008; }
+h2 { font-size:18px; margin:0 0 16px; }
+.section + .section { margin-top:24px; padding-top:20px; border-top:1px solid var(--border); }
+.field { display:grid; grid-template-columns:minmax(0,1fr) minmax(115px, 42%); gap:12px; align-items:center; margin:12px 0; }
+.field label { font-weight:550; }
+.hint { display:block; color:var(--muted); font-size:12px; font-weight:400; margin-top:2px; }
+input, select { width:100%; border:1px solid var(--border); border-radius:10px; background:var(--input); color:var(--text); padding:10px 11px; font:inherit; font-variant-numeric:tabular-nums; }
+input:focus,select:focus { outline:2px solid var(--accent); outline-offset:1px; }
+input[readonly] { opacity:.78; cursor:not-allowed; background:var(--bg); }
+.input-wrap { position:relative; }
+.input-wrap input { padding-right:32px; text-align:right; }
+.suffix { position:absolute; right:11px; top:50%; transform:translateY(-50%); color:var(--muted); pointer-events:none; }
+.results { position:sticky; top:16px; }
+.total { background:var(--green); border-radius:14px; padding:18px; margin-bottom:14px; }
+.total .label { color:var(--muted); font-size:14px; }
+.big { font-size:clamp(30px,4vw,42px); font-weight:750; letter-spacing:-1px; line-height:1.25; margin-top:4px; font-variant-numeric:tabular-nums; }
+.rows { display:grid; gap:0; }
+.result-row { display:flex; justify-content:space-between; gap:16px; padding:12px 0; border-bottom:1px solid var(--border); }
+.result-row:last-child { border-bottom:0; }
+.result-row span:first-child { color:var(--muted); }
+.result-row strong { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.subhead { font-weight:700; margin:20px 0 8px; }
+.payout { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px; }
+.payout-card { border:1px solid var(--border); border-radius:12px; padding:13px; }
+.payout-card .label { font-size:13px; color:var(--muted); }
+.payout-card strong { display:block; font-size:21px; margin-top:5px; font-variant-numeric:tabular-nums; }
+.note { color:var(--muted); font-size:12px; margin-top:12px; }
+.actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+button { border:1px solid var(--border); border-radius:10px; padding:10px 14px; background:transparent; color:var(--text); font:inherit; cursor:pointer; }
+button.primary { background:var(--accent); color:white; border-color:transparent; }
+@media(max-width:760px) { main { padding:18px 12px 30px; } .layout { grid-template-columns:1fr; } .results { position:static; } .panel { padding:16px; } .field { grid-template-columns:minmax(0,1fr) minmax(110px,40%); gap:8px; } }
+
+/* Красивый печатный расчётный листок */
+.print-report { display:none; }
+.period-field { margin-bottom:14px; }
+@page { size:A4; margin:14mm; }
+@media print {
+  :root { color-scheme: light; --text:#172033; --muted:#586579; --border:#d7deea; }
+  body { background:#fff !important; color:#172033 !important; font:10.5pt/1.4 Arial, sans-serif; }
+  main { display:none !important; }
+  .print-report { display:block !important; color:#172033; }
+  .report-top { display:flex; justify-content:space-between; align-items:flex-start; gap:18px; border-bottom:3px solid #1e3a5f; padding-bottom:16px; margin-bottom:20px; }
+  .report-brand { color:#1e3a5f; font-size:10pt; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; }
+  .report-title { font-size:24pt; line-height:1.15; margin:7px 0 5px; font-weight:750; }
+  .report-subtitle { color:#586579; font-size:10pt; }
+  .report-meta { min-width:145px; text-align:right; color:#586579; font-size:9pt; }
+  .report-meta strong { display:block; color:#172033; font-size:11pt; margin-top:4px; }
+  .report-total { display:flex; justify-content:space-between; align-items:center; gap:18px; background:#edf3fa !important; border:1px solid #d2deed; border-left:5px solid #1e3a5f; border-radius:8px; padding:15px 18px; margin:0 0 18px; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .report-total-label { font-size:10pt; color:#45536a; font-weight:700; text-transform:uppercase; letter-spacing:.5px; }
+  .report-total-value { font-size:25pt; font-weight:800; color:#153456; white-space:nowrap; }
+  .report-section-title { font-size:12pt; font-weight:700; color:#1e3a5f; margin:18px 0 8px; padding-bottom:5px; border-bottom:1px solid #d7deea; }
+  .report-table { width:100%; border-collapse:collapse; font-size:9.5pt; }
+  .report-table th { text-align:left; background:#f0f3f8 !important; color:#34445c; font-weight:700; padding:8px 10px; border-bottom:1px solid #d7deea; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .report-table td { padding:7px 10px; border-bottom:1px solid #e5e9f0; }
+  .report-table td:last-child, .report-table th:last-child { text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums; }
+  .report-table tr.emphasis td { font-weight:700; background:#f7f9fc !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .report-payouts { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:9px; }
+  .report-payout { border:1px solid #d7deea; border-radius:8px; padding:12px 14px; }
+  .report-payout-label { color:#586579; font-size:9pt; }
+  .report-payout-value { font-size:19pt; font-weight:800; color:#153456; margin-top:3px; }
+  .report-foot { margin-top:22px; padding-top:10px; border-top:1px solid #d7deea; display:flex; justify-content:space-between; gap:16px; color:#687386; font-size:8pt; }
+  .report-note { margin-top:12px; color:#586579; font-size:8.5pt; }
+  tr, .report-payout, .report-total { break-inside:avoid; }
+}
+
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;main&gt;
+&lt;header&gt;
+&lt;h1&gt;Калькулятор зарплаты&lt;/h1&gt;
+&lt;p class=&quot;subtitle&quot;&gt;Меняй значения в полях — начисления и выплаты пересчитываются автоматически.&lt;/p&gt;
+&lt;/header&gt;
+&lt;div class=&quot;layout&quot;&gt;
+&lt;section class=&quot;panel&quot;&gt;
+&lt;div class=&quot;section&quot;&gt;
+&lt;h2&gt;1. Основные начисления&lt;/h2&gt;
+&lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;hours&quot;&gt;Отработано часов&lt;/label&gt;&lt;input id=&quot;hours&quot; type=&quot;number&quot; min=&quot;0&quot; step=&quot;0.5&quot; value=&quot;0&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;salaryRate&quot;&gt;Оклад за 160 часов, ₽&lt;span class=&quot;hint&quot;&gt;Изменяй в зависимости от оклада в этом месяце&lt;/span&gt;&lt;/label&gt;&lt;input id=&quot;salaryRate&quot; type=&quot;number&quot; min=&quot;0&quot; step=&quot;100&quot; value=&quot;28000&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;deal&quot;&gt;Сделка, ₽&lt;/label&gt;&lt;input id=&quot;deal&quot; type=&quot;number&quot; min=&quot;0&quot; step=&quot;1&quot; value=&quot;0&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;connectionsSolo&quot;&gt;Подключений в одиночку&lt;span class=&quot;hint&quot;&gt;Каждое даёт 1 единицу плана&lt;/span&gt;&lt;/label&gt;&lt;input id=&quot;connectionsSolo&quot; type=&quot;number&quot; min=&quot;0&quot; step=&quot;1&quot; value=&quot;0&quot; inputmode=&quot;decimal&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;connectionsPair&quot;&gt;Подключений вдвоём&lt;span class=&quot;hint&quot;&gt;Каждое даёт 0,5 единицы плана&lt;/span&gt;&lt;/label&gt;&lt;input id=&quot;connectionsPair&quot; type=&quot;number&quot; min=&quot;0&quot; step=&quot;1&quot; value=&quot;0&quot; inputmode=&quot;decimal&quot;&gt;&lt;/div&gt;
+&lt;p class=&quot;note&quot;&gt;Сначала пересчитываем каждый вид подключений по коэффициенту, и только затем складываем: одиночные × 1 + подключения вдвоём × 0,5. Например: 37 одиночных + 65 вдвоём = 37 + 32,5 = 69,5 единицы плана. Ставка определяется по итоговым единицам плана; в поле «Сделка» уже включена базовая оплата 650 ₽ за единицу плана, поэтому здесь добавляется только разница: +100 ₽ за единицу при плане от 24 и +150 ₽ при плане от 34. Полная стоимость подключений повторно не начисляется.&lt;/p&gt;
+&lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;bonus&quot;&gt;Бонус за лучший месяц&lt;/label&gt;&lt;select id=&quot;bonus&quot;&gt;&lt;option value=&quot;yes&quot;&gt;Да&lt;/option&gt;&lt;option value=&quot;no&quot; selected&gt;Нет&lt;/option&gt;&lt;/select&gt;&lt;/div&gt;
+&lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;bonusRate&quot;&gt;Процент бонуса&lt;/label&gt;&lt;div class=&quot;input-wrap&quot;&gt;&lt;input id=&quot;bonusRate&quot; type=&quot;number&quot; min=&quot;0&quot; max=&quot;100&quot; step=&quot;0.5&quot; value=&quot;10&quot;&gt;&lt;span class=&quot;suffix&quot;&gt;%&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;details class=&quot;section&quot;&gt;&lt;summary style=&quot;font-weight:700;cursor:pointer&quot;&gt;Дополнительные правила расчёта&lt;/summary&gt;
+&lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;normHours&quot;&gt;Норма часов для полного оклада&lt;/label&gt;&lt;input id=&quot;normHours&quot; type=&quot;number&quot; min=&quot;1&quot; step=&quot;1&quot; value=&quot;160&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;soloCoeff&quot;&gt;Коэффициент одиночного подключения&lt;/label&gt;&lt;input id=&quot;soloCoeff&quot; type=&quot;number&quot; min=&quot;0&quot; step=&quot;0.1&quot; value=&quot;1&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;pairCoeff&quot;&gt;Коэффициент подключения вдвоём&lt;/label&gt;&lt;input id=&quot;pairCoeff&quot; type=&quot;number&quot; min=&quot;0&quot; step=&quot;0.1&quot; value=&quot;0.5&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;baseRate&quot;&gt;Базовая ставка за единицу плана, ₽&lt;/label&gt;&lt;input id=&quot;baseRate&quot; type=&quot;number&quot; min=&quot;0&quot; step=&quot;10&quot; value=&quot;650&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;two&quot;&gt;&lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;threshold1&quot;&gt;Порог 1, единиц&lt;/label&gt;&lt;input id=&quot;threshold1&quot; type=&quot;number&quot; min=&quot;0&quot; step=&quot;0.5&quot; value=&quot;24&quot;&gt;&lt;/div&gt;&lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;add1&quot;&gt;Доплата при пороге 1, ₽&lt;/label&gt;&lt;input id=&quot;add1&quot; type=&quot;number&quot; min=&quot;0&quot; step=&quot;10&quot; value=&quot;100&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;two&quot;&gt;&lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;threshold2&quot;&gt;Порог 2, единиц&lt;/label&gt;&lt;input id=&quot;threshold2&quot; type=&quot;number&quot; min=&quot;0&quot; step=&quot;0.5&quot; value=&quot;34&quot;&gt;&lt;/div&gt;&lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;add2&quot;&gt;Доплата при пороге 2, ₽&lt;/label&gt;&lt;input id=&quot;add2&quot; type=&quot;number&quot; min=&quot;0&quot; step=&quot;10&quot; value=&quot;150&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p class=&quot;note&quot;&gt;Эти параметры меняют формулу расчёта подключений и долю оклада за отработанные часы.&lt;/p&gt;
+&lt;/details&gt;
+&lt;div class=&quot;section&quot;&gt;
+&lt;h2&gt;2. Доплаты и удержания&lt;/h2&gt;
+&lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;fuelRate&quot;&gt;ГСМ за час, ₽&lt;/label&gt;&lt;input id=&quot;fuelRate&quot; type=&quot;number&quot; min=&quot;0&quot; step=&quot;1&quot; value=&quot;74&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;rent&quot;&gt;Аренда, ₽&lt;/label&gt;&lt;input id=&quot;rent&quot; type=&quot;number&quot; min=&quot;0&quot; step=&quot;1&quot; value=&quot;15000&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;yearBonus&quot;&gt;Годовой бонус, ₽&lt;/label&gt;&lt;input id=&quot;yearBonus&quot; type=&quot;number&quot; min=&quot;0&quot; step=&quot;1&quot; value=&quot;5000&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;fuelCard&quot;&gt;Бензиновая карта, ₽&lt;span class=&quot;hint&quot;&gt;Вычитается из начислений&lt;/span&gt;&lt;/label&gt;&lt;input id=&quot;fuelCard&quot; type=&quot;number&quot; min=&quot;0&quot; step=&quot;1&quot; value=&quot;0&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;takeHomeRate&quot;&gt;Коэффициент «на руки»&lt;/label&gt;&lt;div class=&quot;input-wrap&quot;&gt;&lt;input id=&quot;takeHomeRate&quot; type=&quot;number&quot; min=&quot;0&quot; max=&quot;100&quot; step=&quot;1&quot; value=&quot;87&quot;&gt;&lt;span class=&quot;suffix&quot;&gt;%&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;section&quot;&gt;
+&lt;h2&gt;3. Выплаты по датам&lt;/h2&gt;
+&lt;div class=&quot;field period-field&quot;&gt;&lt;label for=&quot;period&quot;&gt;Расчётный месяц&lt;/label&gt;&lt;input id=&quot;period&quot; type=&quot;month&quot; value=&quot;2026-10&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;firstPay&quot;&gt;Выплата 25-го числа, ₽&lt;/label&gt;&lt;input id=&quot;firstPay&quot; type=&quot;number&quot; min=&quot;0&quot; step=&quot;1&quot; value=&quot;0&quot;&gt;&lt;/div&gt;
+&lt;p class=&quot;note&quot;&gt;Введи ожидаемую выплату 25-го числа — выплата 10-го пересчитается автоматически: сумма «на руки» минус выплата 25-го числа. Аренда уже учтена в общем расчёте и повторно не вычитается.&lt;/p&gt;
+&lt;div class=&quot;actions&quot;&gt;&lt;button class=&quot;primary&quot; id=&quot;reset&quot;&gt;Сбросить к исходным значениям&lt;/button&gt;&lt;button id=&quot;print&quot;&gt;Печать / сохранить в PDF&lt;/button&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/section&gt;
+&lt;aside class=&quot;panel results&quot;&gt;
+&lt;div class=&quot;total&quot;&gt;&lt;div class=&quot;label&quot;&gt;ИТОГО НА РУКИ&lt;/div&gt;&lt;div class=&quot;big&quot; id=&quot;takeHome&quot;&gt;—&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;rows&quot;&gt;
+&lt;div class=&quot;result-row&quot;&gt;&lt;span&gt;Оклад за часы&lt;/span&gt;&lt;strong id=&quot;salary&quot;&gt;—&lt;/strong&gt;&lt;/div&gt;
+&lt;div class=&quot;result-row&quot;&gt;&lt;span&gt;Единицы плана (одиночные + 0,5 × вдвоём)&lt;/span&gt;&lt;strong id=&quot;connectionsPlan&quot;&gt;—&lt;/strong&gt;&lt;/div&gt;
+&lt;div class=&quot;result-row&quot;&gt;&lt;span&gt;Полная ставка по плану&lt;/span&gt;&lt;strong id=&quot;connectionRate&quot;&gt;—&lt;/strong&gt;&lt;/div&gt;
+&lt;div class=&quot;result-row&quot;&gt;&lt;span&gt;Доплата сверх базовых 650 ₽&lt;/span&gt;&lt;strong id=&quot;motivation&quot;&gt;—&lt;/strong&gt;&lt;/div&gt;
+&lt;div class=&quot;result-row&quot;&gt;&lt;span&gt;Основная сумма&lt;/span&gt;&lt;strong id=&quot;base&quot;&gt;—&lt;/strong&gt;&lt;/div&gt;
+&lt;div class=&quot;result-row&quot;&gt;&lt;span&gt;Бонус за лучший месяц&lt;/span&gt;&lt;strong id=&quot;bonusAmount&quot;&gt;—&lt;/strong&gt;&lt;/div&gt;
+&lt;div class=&quot;result-row&quot;&gt;&lt;span&gt;Сумма с бонусом&lt;/span&gt;&lt;strong id=&quot;withBonus&quot;&gt;—&lt;/strong&gt;&lt;/div&gt;
+&lt;div class=&quot;result-row&quot;&gt;&lt;span&gt;Компенсация ГСМ&lt;/span&gt;&lt;strong id=&quot;fuel&quot;&gt;—&lt;/strong&gt;&lt;/div&gt;
+&lt;div class=&quot;result-row&quot;&gt;&lt;span&gt;Годовой бонус&lt;/span&gt;&lt;strong id=&quot;year&quot;&gt;—&lt;/strong&gt;&lt;/div&gt;
+&lt;div class=&quot;result-row&quot;&gt;&lt;span&gt;Бензиновая карта (вычет)&lt;/span&gt;&lt;strong id=&quot;card&quot;&gt;—&lt;/strong&gt;&lt;/div&gt;
+&lt;div class=&quot;result-row&quot;&gt;&lt;span&gt;Начислено до коэффициента&lt;/span&gt;&lt;strong id=&quot;gross&quot;&gt;—&lt;/strong&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;subhead&quot;&gt;Распределение выплат&lt;/div&gt;
+&lt;div class=&quot;payout&quot;&gt;
+&lt;div class=&quot;payout-card&quot;&gt;&lt;div class=&quot;label&quot;&gt;25-е число&lt;/div&gt;&lt;strong id=&quot;firstOut&quot;&gt;—&lt;/strong&gt;&lt;/div&gt;
+&lt;div class=&quot;payout-card&quot;&gt;&lt;div class=&quot;label&quot;&gt;10-е число&lt;/div&gt;&lt;strong id=&quot;secondOut&quot;&gt;—&lt;/strong&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;result-row&quot; style=&quot;margin-top:8px&quot;&gt;&lt;span&gt;Всего выплат&lt;/span&gt;&lt;strong id=&quot;payoutTotal&quot;&gt;—&lt;/strong&gt;&lt;/div&gt;
+&lt;p class=&quot;note&quot;&gt;Суммы округляются до копеек. Расчёт использует заданные тобой ставки и не учитывает другие возможные налоги или удержания.&lt;/p&gt;
+&lt;/aside&gt;
+&lt;/div&gt;
+&lt;/main&gt;
+
+&lt;section class=&quot;print-report&quot; aria-label=&quot;Расчётный листок&quot;&gt;
+  &lt;div class=&quot;report-top&quot;&gt;
+    &lt;div&gt;
+      &lt;div class=&quot;report-brand&quot;&gt;Финансовый расчёт&lt;/div&gt;
+      &lt;div class=&quot;report-title&quot;&gt;Расчётный листок&lt;/div&gt;
+      &lt;div class=&quot;report-subtitle&quot;&gt;Предварительный расчёт начислений и выплат сотруднику&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;report-meta&quot;&gt;Расчётный период&lt;strong id=&quot;reportPeriod&quot;&gt;—&lt;/strong&gt;&lt;div style=&quot;margin-top:10px&quot;&gt;Дата формирования&lt;strong id=&quot;reportDate&quot;&gt;—&lt;/strong&gt;&lt;/div&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;report-total&quot;&gt;&lt;div&gt;&lt;div class=&quot;report-total-label&quot;&gt;Итого к выплате на руки&lt;/div&gt;&lt;div class=&quot;report-subtitle&quot;&gt;После применения коэффициента «на руки»&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;report-total-value&quot; id=&quot;rTakeHome&quot;&gt;—&lt;/div&gt;&lt;/div&gt;
+  &lt;div class=&quot;report-section-title&quot;&gt;1. Основные начисления&lt;/div&gt;
+  &lt;table class=&quot;report-table&quot;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Наименование&lt;/th&gt;&lt;th&gt;Сумма / значение&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;Отработано часов&lt;/td&gt;&lt;td id=&quot;rHours&quot;&gt;—&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Оклад за отработанное время&lt;/td&gt;&lt;td id=&quot;rSalary&quot;&gt;—&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Сделка (включая базовую оплату подключений)&lt;/td&gt;&lt;td id=&quot;rDeal&quot;&gt;—&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Подключения в одиночку&lt;/td&gt;&lt;td id=&quot;rSolo&quot;&gt;—&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Подключения вдвоём&lt;/td&gt;&lt;td id=&quot;rPair&quot;&gt;—&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Итоговые единицы плана (одиночные × 1 + вдвоём × 0,5)&lt;/td&gt;&lt;td id=&quot;rPlan&quot;&gt;—&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Ставка по итоговому плану&lt;/td&gt;&lt;td id=&quot;rRate&quot;&gt;—&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Доплата сверх базовых 650 ₽ за единицу&lt;/td&gt;&lt;td id=&quot;rMotivation&quot;&gt;—&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr class=&quot;emphasis&quot;&gt;&lt;td&gt;Основная сумма&lt;/td&gt;&lt;td id=&quot;rBase&quot;&gt;—&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Бонус за лучший месяц&lt;/td&gt;&lt;td id=&quot;rBonus&quot;&gt;—&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr class=&quot;emphasis&quot;&gt;&lt;td&gt;Сумма с бонусом&lt;/td&gt;&lt;td id=&quot;rWithBonus&quot;&gt;—&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;&lt;/table&gt;
+  &lt;div class=&quot;report-section-title&quot;&gt;2. Доплаты и удержания&lt;/div&gt;
+  &lt;table class=&quot;report-table&quot;&gt;&lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;Компенсация ГСМ&lt;/td&gt;&lt;td id=&quot;rFuel&quot;&gt;—&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Аренда автомобиля&lt;/td&gt;&lt;td id=&quot;rRent&quot;&gt;—&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Годовой бонус&lt;/td&gt;&lt;td id=&quot;rYear&quot;&gt;—&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Бензиновая карта (вычет)&lt;/td&gt;&lt;td id=&quot;rCard&quot;&gt;—&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr class=&quot;emphasis&quot;&gt;&lt;td&gt;Начислено до коэффициента&lt;/td&gt;&lt;td id=&quot;rGross&quot;&gt;—&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Коэффициент «на руки»&lt;/td&gt;&lt;td id=&quot;rTakeRate&quot;&gt;—&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;&lt;/table&gt;
+  &lt;div class=&quot;report-section-title&quot;&gt;3. Распределение выплат&lt;/div&gt;
+  &lt;div class=&quot;report-payouts&quot;&gt;
+    &lt;div class=&quot;report-payout&quot;&gt;&lt;div class=&quot;report-payout-label&quot;&gt;Выплата 25-го числа&lt;/div&gt;&lt;div class=&quot;report-payout-value&quot; id=&quot;rFirst&quot;&gt;—&lt;/div&gt;&lt;/div&gt;
+    &lt;div class=&quot;report-payout&quot;&gt;&lt;div class=&quot;report-payout-label&quot;&gt;Выплата 10-го числа&lt;/div&gt;&lt;div class=&quot;report-payout-value&quot; id=&quot;rSecond&quot;&gt;—&lt;/div&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;table class=&quot;report-table&quot; style=&quot;margin-top:10px&quot;&gt;&lt;tbody&gt;&lt;tr class=&quot;emphasis&quot;&gt;&lt;td&gt;Всего выплат&lt;/td&gt;&lt;td id=&quot;rPayoutTotal&quot;&gt;—&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+  &lt;div class=&quot;report-note&quot;&gt;Документ сформирован калькулятором по введённым значениям и предназначен для предварительной оценки. Это не официальный расчётный листок работодателя. Выплата 10-го рассчитана как сумма «на руки» минус выплата 25-го; аренда повторно не вычитается.&lt;/div&gt;
+  &lt;div class=&quot;report-foot&quot;&gt;&lt;span&gt;Расчёт начислений и выплат&lt;/span&gt;&lt;span&gt;Сформировано автоматически&lt;/span&gt;&lt;/div&gt;
+&lt;/section&gt;
+
+&lt;script&gt;
+const ids = [&#x27;period&#x27;,&#x27;hours&#x27;,&#x27;salaryRate&#x27;,&#x27;deal&#x27;,&#x27;connectionsSolo&#x27;,&#x27;connectionsPair&#x27;,&#x27;bonus&#x27;,&#x27;bonusRate&#x27;,&#x27;fuelRate&#x27;,&#x27;rent&#x27;,&#x27;yearBonus&#x27;,&#x27;fuelCard&#x27;,&#x27;takeHomeRate&#x27;,&#x27;firstPay&#x27;,&#x27;normHours&#x27;,&#x27;soloCoeff&#x27;,&#x27;pairCoeff&#x27;,&#x27;baseRate&#x27;,&#x27;threshold1&#x27;,&#x27;add1&#x27;,&#x27;threshold2&#x27;,&#x27;add2&#x27;];
+const el = id =&gt; document.getElementById(id);
+const num = id =&gt; { const v = Number(el(id).value); return Number.isFinite(v) ? v : 0; };
+const money = value =&gt; new Intl.NumberFormat(&#x27;ru-RU&#x27;,{style:&#x27;currency&#x27;,currency:&#x27;RUB&#x27;,minimumFractionDigits:2,maximumFractionDigits:2}).format(value);
+
+const rub0 = value =&gt; new Intl.NumberFormat(&#x27;ru-RU&#x27;,{style:&#x27;currency&#x27;,currency:&#x27;RUB&#x27;,minimumFractionDigits:2,maximumFractionDigits:2}).format(value);
+const integerFmt = value =&gt; new Intl.NumberFormat(&#x27;ru-RU&#x27;,{maximumFractionDigits:2}).format(value);
+function setReport(id, value) { const node=el(id); if(node) node.textContent=value; }
+function syncReport(data) {
+ const period=el(&#x27;period&#x27;).value;
+ if(period) { const [y,m]=period.split(&#x27;-&#x27;); setReport(&#x27;reportPeriod&#x27;,new Date(Number(y),Number(m)-1,1).toLocaleDateString(&#x27;ru-RU&#x27;,{month:&#x27;long&#x27;,year:&#x27;numeric&#x27;})); }
+ else setReport(&#x27;reportPeriod&#x27;,&#x27;Не указан&#x27;);
+ setReport(&#x27;reportDate&#x27;,new Date().toLocaleDateString(&#x27;ru-RU&#x27;,{day:&#x27;2-digit&#x27;,month:&#x27;2-digit&#x27;,year:&#x27;numeric&#x27;}));
+ const fields={rHours:integerFmt(num(&#x27;hours&#x27;))+&#x27; ч&#x27;,rSalary:rub0(data.salary),rDeal:rub0(num(&#x27;deal&#x27;)),rSolo:integerFmt(num(&#x27;connectionsSolo&#x27;))+&#x27; шт.&#x27;,rPair:integerFmt(num(&#x27;connectionsPair&#x27;))+&#x27; шт.&#x27;,rPlan:integerFmt(data.connectionsPlan)+&#x27; ед.&#x27;,rRate:rub0(data.connectionRate)+&#x27; / ед.&#x27;,rMotivation:rub0(data.motivation),rBase:rub0(data.base),rBonus:rub0(data.bonusAmount),rWithBonus:rub0(data.withBonus),rFuel:rub0(data.fuel),rRent:rub0(num(&#x27;rent&#x27;)),rYear:rub0(num(&#x27;yearBonus&#x27;)),rCard:rub0(-num(&#x27;fuelCard&#x27;)),rGross:rub0(data.gross),rTakeRate:integerFmt(num(&#x27;takeHomeRate&#x27;))+&#x27;%&#x27;,rTakeHome:rub0(data.takeHome),rFirst:rub0(data.firstOut),rSecond:rub0(data.secondOut),rPayoutTotal:rub0(data.payoutTotal)};
+ for(const [id,value] of Object.entries(fields)) setReport(id,value);
+}
+
+function calculate() {
+ const hours=num(&#x27;hours&#x27;), deal=num(&#x27;deal&#x27;);
+ const solo=num(&#x27;connectionsSolo&#x27;), pair=num(&#x27;connectionsPair&#x27;);
+ const soloPlan=solo*num(&#x27;soloCoeff&#x27;);
+ const pairPlan=pair*num(&#x27;pairCoeff&#x27;);
+ const connectionsPlan=soloPlan+pairPlan;
+ const baseRate=num(&#x27;baseRate&#x27;), threshold1=num(&#x27;threshold1&#x27;), threshold2=num(&#x27;threshold2&#x27;);
+ const connectionRate=connectionsPlan&gt;=threshold2 ? baseRate+num(&#x27;add2&#x27;) : connectionsPlan&gt;=threshold1 ? baseRate+num(&#x27;add1&#x27;) : baseRate;
+ const salary=num(&#x27;salaryRate&#x27;)/Math.max(1,num(&#x27;normHours&#x27;))*hours;
+ // Начисляем только разницу сверх базовой ставки, уже включённой в поле «Сделка».
+ const extraRate=Math.max(0, connectionRate-baseRate);
+ const motivation=connectionsPlan*extraRate;
+ const base=salary+deal+motivation;
+ const bonus=el(&#x27;bonus&#x27;).value===&#x27;yes&#x27; ? base*num(&#x27;bonusRate&#x27;)/100 : 0;
+ const withBonus=base+bonus, fuel=hours*num(&#x27;fuelRate&#x27;);
+ const gross=withBonus+fuel+num(&#x27;rent&#x27;)+num(&#x27;yearBonus&#x27;)-num(&#x27;fuelCard&#x27;);
+ const takeHome=gross*num(&#x27;takeHomeRate&#x27;)/100;
+ const first=num(&#x27;firstPay&#x27;), second=takeHome-first;
+ const values={salary,connectionsPlan,connectionRate,motivation,base,bonusAmount:bonus,withBonus,fuel,year:num(&#x27;yearBonus&#x27;),card:-num(&#x27;fuelCard&#x27;),gross,takeHome,firstOut:first,secondOut:second,payoutTotal:first+second};
+ syncReport(values);
+ for (const [id,value] of Object.entries(values)) {
+   if (id===&#x27;connectionsPlan&#x27;) el(id).textContent=new Intl.NumberFormat(&#x27;ru-RU&#x27;,{maximumFractionDigits:1}).format(value)+&#x27; ед.&#x27;;
+   else if (id===&#x27;connectionRate&#x27;) el(id).textContent=money(value)+&#x27; / шт.&#x27;;
+   else el(id).textContent=money(value);
+ }
+}
+const now=new Date(); el(&#x27;period&#x27;).value=now.getFullYear()+&#x27;-&#x27;+String(now.getMonth()+1).padStart(2,&#x27;0&#x27;);
+const settingIds=[&#x27;salaryRate&#x27;,&#x27;deal&#x27;,&#x27;connectionsSolo&#x27;,&#x27;connectionsPair&#x27;,&#x27;bonus&#x27;,&#x27;bonusRate&#x27;,&#x27;fuelRate&#x27;,&#x27;rent&#x27;,&#x27;yearBonus&#x27;,&#x27;fuelCard&#x27;,&#x27;takeHomeRate&#x27;,&#x27;firstPay&#x27;,&#x27;normHours&#x27;,&#x27;soloCoeff&#x27;,&#x27;pairCoeff&#x27;,&#x27;baseRate&#x27;,&#x27;threshold1&#x27;,&#x27;add1&#x27;,&#x27;threshold2&#x27;,&#x27;add2&#x27;];
+function salaryValues(){const out={};for(const id of settingIds)out[id]=el(id).value;return out;}
+function saveSalaryValues(){try{localStorage.setItem(&#x27;salaryCalculatorSettings_v1&#x27;,JSON.stringify(salaryValues()))}catch(e){}if(window.parent!==window)window.parent.postMessage({type:&#x27;salary-values&#x27;,values:salaryValues()},&#x27;*&#x27;)}
+try{const stored=JSON.parse(localStorage.getItem(&#x27;salaryCalculatorSettings_v1&#x27;)||&#x27;null&#x27;);if(stored)for(const id of settingIds)if(stored[id]!==undefined)el(id).value=stored[id]}catch(e){}
+ids.forEach(id=&gt;el(id).addEventListener(&#x27;input&#x27;,()=&gt;{calculate();if(settingIds.includes(id))saveSalaryValues()}));
+el(&#x27;reset&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{const now=new Date();const month=now.getFullYear()+&#x27;-&#x27;+String(now.getMonth()+1).padStart(2,&#x27;0&#x27;);const defaults={period:month,hours:0,salaryRate:28000,deal:0,connectionsSolo:0,connectionsPair:0,bonus:&#x27;no&#x27;,bonusRate:10,fuelRate:74,rent:15000,yearBonus:5000,fuelCard:0,takeHomeRate:87,firstPay:0,normHours:160,soloCoeff:1,pairCoeff:0.5,baseRate:650,threshold1:24,add1:100,threshold2:34,add2:150};for(const [id,value] of Object.entries(defaults))el(id).value=value;calculate();saveSalaryValues();});
+el(&#x27;print&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;window.print());
+calculate();
+window.addEventListener(&#x27;message&#x27;,event=&gt;{const data=event.data;if(!data)return;if(data.type===&#x27;shift-hours&#x27;){el(&#x27;hours&#x27;).value=Number(data.hours||0);if(data.period)el(&#x27;period&#x27;).value=data.period;calculate()}else if(data.type===&#x27;salary-settings&#x27;&amp;&amp;data.values){for(const [id,value] of Object.entries(data.values))if(settingIds.includes(id)&amp;&amp;value!==undefined)el(id).value=value;calculate();try{localStorage.setItem(&#x27;salaryCalculatorSettings_v1&#x27;,JSON.stringify(salaryValues()))}catch(e){}}else if(data.type===&#x27;get-salary-values&#x27;){window.parent.postMessage({type:&#x27;salary-values&#x27;,values:salaryValues()},&#x27;*&#x27;)}});
+if(window.parent!==window)window.parent.postMessage({type:&#x27;salary-ready&#x27;,values:salaryValues()},&#x27;*&#x27;);
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+</section>
+<script>
+(()=>{
+const $=id=>document.getElementById(id);
+const today=new Date(); let viewYear=2026,viewMonth=9;let selectedDate=new Date(2026,9,11);
+const STORAGE='shiftCalendar3x2_v1';
+let state={cycleStart:'2026-10-11',workDays:3,offDays:2,shiftStart:'09:00',shiftEnd:'21:00',lunch:60,overrides:{},vacation:null,alarmEnabled:false,alarmLead:30,salarySettings:{salaryRate:28000,fuelRate:74,rent:15000,yearBonus:5000,takeHomeRate:87,bonusRate:10,bonus:'no',deal:0,fuelCard:0,firstPay:0,connectionsSolo:0,connectionsPair:0,normHours:160,soloCoeff:1,pairCoeff:0.5,baseRate:650,threshold1:24,add1:100,threshold2:34,add2:150}};
+try{const saved=JSON.parse(localStorage.getItem(STORAGE)||'null');if(saved&&typeof saved==='object'){state={...state,...saved,overrides:saved.overrides||{},vacation:saved.vacation||null,salarySettings:{...state.salarySettings,...(saved.salarySettings||{})}}}}catch(e){}
+$('cycleStart').value=state.cycleStart;
+const cfgDefaults={workDays:3,offDays:2,shiftStart:'09:00',shiftEnd:'21:00',lunch:60};
+function graphName(){return `${state.workDays}/${state.offDays}`}
+function syncSettingsForm(){ $('cfgWorkDays').value=state.workDays; $('cfgOffDays').value=state.offDays; $('cfgCycleStart').value=state.cycleStart; $('cycleStart').value=state.cycleStart; $('cfgStartTime').value=state.shiftStart; $('cfgEndTime').value=state.shiftEnd; $('cfgLunch').value=state.lunch; const preset=graphName(); $('cfgPreset').value=['3/2','5/2','2/2','4/2'].includes(preset)?preset:'custom'; const ss=state.salarySettings||{}; const map={cfgSalaryRate:'salaryRate',cfgFuelRate:'fuelRate',cfgRent:'rent',cfgYearBonus:'yearBonus',cfgTakeHomeRate:'takeHomeRate',cfgBonusRate:'bonusRate',cfgBonus:'bonus',cfgDeal:'deal',cfgFuelCard:'fuelCard',cfgFirstPay:'firstPay',cfgSolo:'connectionsSolo',cfgPair:'connectionsPair',cfgNormHours:'normHours',cfgSoloCoeff:'soloCoeff',cfgPairCoeff:'pairCoeff',cfgBaseRate:'baseRate',cfgThreshold1:'threshold1',cfgAdd1:'add1',cfgThreshold2:'threshold2',cfgAdd2:'add2'}; for(const [cfg,id] of Object.entries(map))if(ss[id]!==undefined)$(cfg).value=ss[id]; $('cfgAlarmEnabled').checked=!!state.alarmEnabled; $('cfgAlarmLead').value=String(state.alarmLead||30); }
+syncSettingsForm();
+const pad=n=>String(n).padStart(2,'0');
+const key=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const parseKey=s=>{const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)};
+const fmtDate=d=>d.toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'});
+const saveState=()=>{try{localStorage.setItem(STORAGE,JSON.stringify(state));return true}catch(e){return false}}
+function showStatus(message,error=false){const el=$('statusMessage');if(!el)return;el.textContent=message;el.className='status show'+(error?' error':'')}
+function scrollToEditor(){if(window.matchMedia('(max-width:760px)').matches){$('editor').scrollIntoView({behavior:'smooth',block:'start'})}}
+function cycleType(date){const a=parseKey(state.cycleStart);const b=new Date(date.getFullYear(),date.getMonth(),date.getDate());const diff=Math.round((b-a)/86400000);const work=Math.max(1,Number(state.workDays)||3),off=Math.max(1,Number(state.offDays)||2),cycle=work+off;const phase=((diff%cycle)+cycle)%cycle;return phase<work?'work':'off'}
+function dayData(date){const k=key(date),o=state.overrides[k];const type=o?.type||cycleType(date);const start=o?.start||state.shiftStart||'09:00',end=o?.end||state.shiftEnd||'21:00',lunch=Number(o?.lunch??state.lunch??60);let mins=0;if(type==='work'||type==='extra'){const [sh,sm]=start.split(':').map(Number),[eh,em]=end.split(':').map(Number);let total=eh*60+em-(sh*60+sm);if(total<0)total+=1440;mins=Math.max(0,total-lunch)}return {type,start,end,lunch,mins,overridden:!!o}}
+function vacationDay(date){if(!state.vacation?.start||!state.vacation?.end)return false;const k=key(date);return k>=state.vacation.start&&k<=state.vacation.end}
+function vacationCounts(){let total=0,work=0,off=0;if(state.vacation?.start&&state.vacation?.end&&state.vacation.start<=state.vacation.end){let d=parseKey(state.vacation.start),end=parseKey(state.vacation.end);for(;d<=end;d.setDate(d.getDate()+1)){total++;const t=dayData(d).type;if(t==='work'||t==='extra')work++;else off++}}return {total,work,off}}
+function typeLabel(type){return type==='work'?'Работа':type==='extra'?'Доп. смена':'Выходной'}
+function annualMinutes(year){let total=0;for(let month=0;month<12;month++){const last=new Date(year,month+1,0).getDate();for(let day=1;day<=last;day++){const d=new Date(year,month,day);if(!vacationDay(d))total+=dayData(d).mins}}return total}
+function syncAndroidAlarms(){
+ const bridge=window.AndroidAlarm; if(!bridge||typeof bridge.scheduleAlarms!=='function')return;
+ const enabled=!!state.alarmEnabled, lead=Math.max(0,Number(state.alarmLead)||30), now=new Date(), end=new Date(now.getFullYear(),now.getMonth(),now.getDate()+120); const items=[];
+ if(enabled){for(let d=new Date(now.getFullYear(),now.getMonth(),now.getDate());d<=end;d.setDate(d.getDate()+1)){const x=dayData(d);if((x.type!=='work'&&x.type!=='extra')||vacationDay(d))continue;const parts=x.start.split(':').map(Number);const trigger=new Date(d.getFullYear(),d.getMonth(),d.getDate(),parts[0],parts[1],0,0);trigger.setMinutes(trigger.getMinutes()-lead);if(trigger.getTime()<=now.getTime())continue;items.push({id:key(d).replaceAll('-',''),at:trigger.getTime(),title:x.type==='extra'?'Дополнительная смена':'Скоро рабочая смена',message:`Начало смены сегодня в ${x.start}. До выхода ${lead} мин.`});}}
+ try{bridge.scheduleAlarms(JSON.stringify({enabled,items}));$('alarmMessage').textContent=enabled?`Будильник включён. Запланировано напоминаний на ближайшие 120 дней: ${items.length}.`:'Будильник выключен.';}catch(e){$('alarmMessage').textContent='Не удалось передать настройки будильника в Android-приложение.';}
+}
+function render(){
+ const first=new Date(viewYear,viewMonth,1),last=new Date(viewYear,viewMonth+1,0);$('monthTitle').textContent=first.toLocaleDateString('ru-RU',{month:'long',year:'numeric'});$('calendarHeading').textContent='Календарь смен '+graphName();$('calendarDescription').textContent=`${state.workDays} рабочих дней, ${state.offDays} выходных. Смена ${state.shiftStart}–${state.shiftEnd}, обед — ${state.lunch} мин., чистое время ${(Math.max(0,((+state.shiftEnd.slice(0,2)*60+ +state.shiftEnd.slice(3))- (+state.shiftStart.slice(0,2)*60+ +state.shiftStart.slice(3)) +1440)%1440-state.lunch)/60).toLocaleString('ru-RU',{maximumFractionDigits:2})} ч.`;$('autoScheduleOption').textContent='По графику '+graphName();
+ const offset=(first.getDay()+6)%7;let html='';for(let i=0;i<offset;i++)html+='<div class="day empty"></div>';
+ let shifts=0,offs=0,extras=0,mins=0;
+ for(let day=1;day<=last.getDate();day++){const d=new Date(viewYear,viewMonth,day),data=dayData(d),k=key(d),onVacation=vacationDay(d);if(data.type==='work'||data.type==='extra'){if(!onVacation){shifts++;mins+=data.mins;if(data.type==='extra')extras++}}else offs++;
+ const isToday=k===key(new Date()),isSelected=k===key(selectedDate),vacClass=onVacation?((data.type==='work'||data.type==='extra')?' vac-work':' vac-off'):'';const baseLabel=data.type==='work'?'Рабочая':data.type==='extra'?'Доп. смена':'Выходной';const label=onVacation?((data.type==='work'||data.type==='extra')?'Отпуск · смена':'Отпуск · выходной'):baseLabel;const hrs=(data.mins/60).toLocaleString('ru-RU',{maximumFractionDigits:2});
+ html+=`<button type="button" class="day ${data.type}${vacClass}${data.overridden?' manual':''}${isToday?' today':''}${isSelected?' selected':''}" data-date="${k}" aria-label="${day} ${label}" title="${onVacation?'Отпуск: '+baseLabel:(data.overridden?'День изменён вручную':'По графику 3/2')}"><span class="num">${day}</span><span class="tag">${label}</span>${data.mins&&!onVacation?`<span class="hours">${hrs} ч</span>`:''}</button>`}
+ $('calendar').innerHTML=html;
+ $('calendar').querySelectorAll('[data-date]').forEach(b=>b.addEventListener('click',()=>{selectedDate=parseKey(b.dataset.date);loadEditor();render();showStatus('Выбрана дата: '+fmtDate(selectedDate)+'. Измени параметры и нажми «Сохранить день».');scrollToEditor()}));
+ $('shiftCount').textContent=shifts;$('hourCount').textContent=(mins/60).toLocaleString('ru-RU',{maximumFractionDigits:2});$('offCount').textContent=offs;$('extraCount').textContent=extras;$('annualHourCount').textContent=(annualMinutes(viewYear)/60).toLocaleString('ru-RU',{maximumFractionDigits:2});$('annualYearHint').textContent=`за ${viewYear} год · по всем 12 месяцам`;const vc=vacationCounts();$('vacTotal').textContent=vc.total;$('vacWork').textContent=vc.work;$('vacOff').textContent=vc.off;$('vacMessage').textContent=vc.total?`Период: ${fmtDate(parseKey(state.vacation.start))} — ${fmtDate(parseKey(state.vacation.end))}. Учитываются ручные изменения графика.`:'Выбери период отпуска и нажми «Показать отпуск».';;syncAndroidAlarms();
+}
+function loadEditor(){const k=key(selectedDate),data=dayData(selectedDate);$('editorTitle').textContent='Смена на выбранную дату';$('editorDate').textContent=fmtDate(selectedDate);$('dayType').value=data.overridden?data.type:'auto';$('startTime').value=data.start;$('endTime').value=data.end;$('lunch').value=data.lunch;updatePreview()}
+function updatePreview(){const type=$('dayType').value,start=$('startTime').value||'09:00',end=$('endTime').value||'21:00',lunch=Math.max(0,Number($('lunch').value)||0);let mins=0;const [sh,sm]=start.split(':').map(Number),[eh,em]=end.split(':').map(Number);let total=eh*60+em-(sh*60+sm);if(total<0)total+=1440;if(type!=='off')mins=Math.max(0,total-lunch);$('dayHours').textContent=type==='off'?'0 ч':`${(mins/60).toLocaleString('ru-RU',{maximumFractionDigits:2})} ч`;$('dayHoursDetail').textContent=type==='off'?'Выходной — рабочие часы не учитываются':`${(total/60).toLocaleString('ru-RU',{maximumFractionDigits:2})} ч между началом и окончанием минус ${lunch} мин обеда`}
+$('prevBtn').addEventListener('click',()=>{viewMonth--;if(viewMonth<0){viewMonth=11;viewYear--}render()});$('nextBtn').addEventListener('click',()=>{viewMonth++;if(viewMonth>11){viewMonth=0;viewYear++}render()});$('todayBtn').addEventListener('click',()=>{viewYear=today.getFullYear();viewMonth=today.getMonth();selectedDate=new Date(today.getFullYear(),today.getMonth(),today.getDate());loadEditor();render()});
+['dayType','startTime','endTime','lunch'].forEach(id=>$(id).addEventListener('input',updatePreview));
+function applySelectedDay(showMessage=true){
+ const k=key(selectedDate),type=$('dayType').value;
+ if(type==='auto') delete state.overrides[k];
+ else state.overrides[k]={type,start:$('startTime').value||'09:00',end:$('endTime').value||'21:00',lunch:Math.max(0,Number($('lunch').value)||0)};
+ const persisted=saveState();
+ render();
+ if(showMessage){
+   const label=type==='auto'?'График 3/2 восстановлен':'Применено: '+typeLabel(type).toLowerCase();
+   showStatus(label+' — '+fmtDate(selectedDate)+'. '+(persisted?'Календарь обновлён, изменения сохранены.':'Календарь обновлён, но браузер не разрешил сохранить изменения между открытиями.'),!persisted);
+ }
+}
+$('saveDay').addEventListener('click',()=>applySelectedDay(true));
+// На телефонах изменения полей применяются сразу, чтобы не зависеть от кнопки сохранения.
+$('dayType').addEventListener('change',()=>applySelectedDay(true));
+['startTime','endTime','lunch'].forEach(id=>$(id).addEventListener('change',()=>{if($('dayType').value!=='auto')applySelectedDay(true)}));
+$('resetDay').addEventListener('click',()=>{delete state.overrides[key(selectedDate)];const persisted=saveState();loadEditor();render();showStatus('Для '+fmtDate(selectedDate)+' восстановлен график 3/2.'+(persisted?' Изменения сохранены.':' Браузер не разрешил сохранить изменения между открытиями.'),!persisted)});
+$('saveCycle').addEventListener('click',()=>{const val=$('cycleStart').value;if(!val){showStatus('Сначала выбери дату первого рабочего дня.',true);return}state.cycleStart=val;$('cfgCycleStart').value=val;const persisted=saveState();render();loadEditor();showStatus('График '+graphName()+' пересчитан от '+fmtDate(parseKey(val))+'.'+(persisted?' Изменения сохранены.':' Браузер не разрешил сохранить изменения между открытиями.'),!persisted)});
+$('vacStart').value=state.vacation?.start||'';$('vacEnd').value=state.vacation?.end||'';
+$('saveVacation').addEventListener('click',()=>{const start=$('vacStart').value,end=$('vacEnd').value;if(!start||!end){showStatus('Выбери обе даты отпуска.',true);return}if(start>end){showStatus('Дата окончания отпуска не может быть раньше даты начала.',true);return}state.vacation={start,end};const persisted=saveState();render();showStatus('Отпуск отмечен в календаре. '+(persisted?'Период сохранён на этом устройстве.':'Браузер не разрешил сохранить период между открытиями.'),!persisted)});
+$('clearVacation').addEventListener('click',()=>{state.vacation=null;$('vacStart').value='';$('vacEnd').value='';const persisted=saveState();render();showStatus('Отпуск убран из календаря.'+(persisted?'':' Изменения не удалось сохранить.'),!persisted)});
+$('printBtn').addEventListener('click',()=>window.print());
+$('icsBtn').addEventListener('click',()=>{
+ const last=new Date(viewYear,viewMonth+1,0);
+ const escICS=v=>String(v).replace(/\\/g,'\\\\').replace(/\n/g,'\\n').replace(/,/g,'\\,').replace(/;/g,'\\;');
+ const stamp=new Date().toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'');
+ const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Shift Calendar 3x2//RU','CALSCALE:GREGORIAN','METHOD:PUBLISH','X-WR-CALNAME:Рабочие смены','BEGIN:VTIMEZONE','TZID:Europe/Moscow','X-LIC-LOCATION:Europe/Moscow','BEGIN:STANDARD','TZOFFSETFROM:+0300','TZOFFSETTO:+0300','TZNAME:MSK','DTSTART:19700101T000000','END:STANDARD','END:VTIMEZONE'];
+ let count=0;
+ for(let i=1;i<=last.getDate();i++){
+  const d=new Date(viewYear,viewMonth,i),x=dayData(d);
+  if((x.type!=='work'&&x.type!=='extra')||vacationDay(d))continue;
+  const datePart=`${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}`;
+  const start=(x.start||'09:00').replace(':','')+'00';
+  const end=(x.end||'21:00').replace(':','')+'00';
+  const title=x.type==='extra'?'Дополнительная рабочая смена':'Рабочая смена';
+  const hours=(x.mins/60).toLocaleString('ru-RU',{maximumFractionDigits:2});
+  lines.push('BEGIN:VEVENT',`UID:shift-${datePart}-${x.type}@shift-calendar.local`,`DTSTAMP:${stamp}`,`DTSTART;TZID=Europe/Moscow:${datePart}T${start}`,`DTEND;TZID=Europe/Moscow:${datePart}T${end}`,`SUMMARY:${escICS(title)}`,`DESCRIPTION:${escICS(`График ${graphName()}. Рабочее время без обеда: ${hours} ч. Обед: ${x.lunch} мин.`)}`,'BEGIN:VALARM','ACTION:DISPLAY',`TRIGGER:-PT${Math.max(0,Number(state.alarmLead)||30)}M`,'DESCRIPTION:Скоро рабочая смена','END:VALARM','END:VEVENT');
+  count++;
+ }
+ lines.push('END:VCALENDAR');
+ if(!count){showStatus('В этом месяце нет рабочих или дополнительных смен для экспорта.',true);return}
+ const blob=new Blob([lines.join('\r\n')+'\r\n'],{type:'text/calendar;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;a.download=`Смены_для_iPhone_${viewYear}-${pad(viewMonth+1)}.ics`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+ showStatus(`Подготовлен файл календаря: ${count} смен за выбранный месяц. В каждую смену добавлено напоминание за ${Math.max(0,Number(state.alarmLead)||30)} мин. Открой файл .ics на iPhone и выбери добавление всех событий в «Календарь».`);
+});
+$('csvBtn').addEventListener('click',()=>{const last=new Date(viewYear,viewMonth+1,0);let rows=[['Дата','День недели','Тип дня','Отпуск','Начало','Окончание','Обед (мин)','Рабочие часы']];for(let i=1;i<=last.getDate();i++){const d=new Date(viewYear,viewMonth,i),x=dayData(d);rows.push([key(d),d.toLocaleDateString('ru-RU',{weekday:'long'}),typeLabel(x.type),vacationDay(d)?((x.type==='work'||x.type==='extra')?'Отпуск — рабочая смена':'Отпуск — выходной'):'',x.start,x.end,x.lunch,(x.mins/60).toLocaleString('ru-RU',{maximumFractionDigits:2})])}const csv='\ufeff'+rows.map(r=>r.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(';')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`График_смен_${viewYear}-${pad(viewMonth+1)}.csv`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)});
+loadEditor();render();
+// Переключение разделов, синхронизация параметров и часов зарплаты.
+const calendarTab=document.getElementById('calendarTab'), salaryTab=document.getElementById('salaryTab'), settingsTab=document.getElementById('settingsTab');
+const calendarTabBtn=document.getElementById('calendarTabBtn'), salaryTabBtn=document.getElementById('salaryTabBtn'), settingsTabBtn=document.getElementById('settingsTabBtn');
+const salaryFrame=document.getElementById('salaryFrame');
+function salarySettingsPayload(){return {...state.salarySettings}}
+function switchTab(which){const salary=which==='salary',settings=which==='settings';calendarTab.hidden=salary||settings;salaryTab.hidden=!salary;settingsTab.hidden=!settings;calendarTabBtn.classList.toggle('active',!salary&&!settings);salaryTabBtn.classList.toggle('active',salary);settingsTabBtn.classList.toggle('active',settings);if(salary){if(salaryFrame.contentWindow){salaryFrame.contentWindow.postMessage({type:'salary-settings',values:salarySettingsPayload()},'*');salaryFrame.contentWindow.postMessage({type:'shift-hours',hours:monthMinutes(viewYear,viewMonth)/60,period:`${viewYear}-${pad(viewMonth+1)}`},'*')}window.scrollTo({top:0,behavior:'smooth'})}else if(settings){syncSettingsForm();if(salaryFrame.contentWindow)salaryFrame.contentWindow.postMessage({type:'get-salary-values'},'*');window.scrollTo({top:0,behavior:'smooth'})}}
+function monthMinutes(year,month){let total=0;const last=new Date(year,month+1,0).getDate();for(let day=1;day<=last;day++){const d=new Date(year,month,day);if(!vacationDay(d))total+=dayData(d).mins}return total}
+calendarTabBtn.addEventListener('click',()=>switchTab('calendar'));salaryTabBtn.addEventListener('click',()=>switchTab('salary'));settingsTabBtn.addEventListener('click',()=>switchTab('settings'));
+$('toSalaryBtn').addEventListener('click',()=>{switchTab('salary');const payload={type:'shift-hours',hours:monthMinutes(viewYear,viewMonth)/60,period:`${viewYear}-${pad(viewMonth+1)}`};salaryFrame.contentWindow.postMessage(payload,'*')});
+$('cfgPreset').addEventListener('change',()=>{const val=$('cfgPreset').value;if(val!=='custom'){const [w,o]=val.split('/').map(Number);$('cfgWorkDays').value=w;$('cfgOffDays').value=o}});
+['cfgWorkDays','cfgOffDays'].forEach(id=>$(id).addEventListener('input',()=>{$('cfgPreset').value='custom'}));
+function cfgSalaryValues(){return {salaryRate:Number($('cfgSalaryRate').value)||0,fuelRate:Number($('cfgFuelRate').value)||0,rent:Number($('cfgRent').value)||0,yearBonus:Number($('cfgYearBonus').value)||0,takeHomeRate:Number($('cfgTakeHomeRate').value)||0,bonusRate:Number($('cfgBonusRate').value)||0,bonus:$('cfgBonus').value,deal:Number($('cfgDeal').value)||0,fuelCard:Number($('cfgFuelCard').value)||0,firstPay:Number($('cfgFirstPay').value)||0,connectionsSolo:Number($('cfgSolo').value)||0,connectionsPair:Number($('cfgPair').value)||0,normHours:Number($('cfgNormHours').value)||160,soloCoeff:Number($('cfgSoloCoeff').value)||0,pairCoeff:Number($('cfgPairCoeff').value)||0,baseRate:Number($('cfgBaseRate').value)||0,threshold1:Number($('cfgThreshold1').value)||0,add1:Number($('cfgAdd1').value)||0,threshold2:Number($('cfgThreshold2').value)||0,add2:Number($('cfgAdd2').value)||0}}
+$('saveAlarmSettings').addEventListener('click',()=>{state.alarmEnabled=$('cfgAlarmEnabled').checked;state.alarmLead=Number($('cfgAlarmLead').value)||30;const persisted=saveState();syncAndroidAlarms();$('alarmMessage').textContent=(state.alarmEnabled?'Напоминания включены. ':'Напоминания выключены. ')+(persisted?'Настройки сохранены.':'Не удалось сохранить настройки.');});
+$('cfgAlarmEnabled').addEventListener('change',()=>{state.alarmEnabled=$('cfgAlarmEnabled').checked;state.alarmLead=Number($('cfgAlarmLead').value)||30;saveState();syncAndroidAlarms()});$('cfgAlarmLead').addEventListener('change',()=>{state.alarmLead=Number($('cfgAlarmLead').value)||30;saveState();syncAndroidAlarms()});
+$('testAlarmBtn').addEventListener('click',()=>{if(window.AndroidAlarm&&typeof window.AndroidAlarm.testNotification==='function'){window.AndroidAlarm.testNotification();$('alarmMessage').textContent='Отправлен тестовый запрос уведомления. Проверь разрешения Android.'}else{$('alarmMessage').textContent='Тестовый звук доступен только внутри Android-приложения.'}});
+$('saveSettings').addEventListener('click',()=>{const work=Math.floor(Number($('cfgWorkDays').value)),off=Math.floor(Number($('cfgOffDays').value)),start=$('cfgCycleStart').value,st=$('cfgStartTime').value,en=$('cfgEndTime').value,lunch=Number($('cfgLunch').value);if(!Number.isFinite(work)||work<1||work>31||!Number.isFinite(off)||off<1||off>31){$('settingsMessage').textContent='Количество рабочих дней и выходных должно быть от 1 до 31.';return}if(!start||!st||!en||!Number.isFinite(lunch)||lunch<0||lunch>600){$('settingsMessage').textContent='Проверь дату, время смены и длительность обеда.';return}state.workDays=work;state.offDays=off;state.cycleStart=start;state.shiftStart=st;state.shiftEnd=en;state.lunch=lunch;state.salarySettings=cfgSalaryValues();const persisted=saveState();$('cycleStart').value=start;render();loadEditor();if(salaryFrame.contentWindow)salaryFrame.contentWindow.postMessage({type:'salary-settings',values:salarySettingsPayload()},'*');syncAndroidAlarms();$('settingsMessage').textContent='Настройки применены. '+(persisted?'Сохранены на этом устройстве.':'Не удалось сохранить между открытиями — проверь настройки браузера.');});
+$('resetSettings').addEventListener('click',()=>{state.workDays=3;state.offDays=2;state.cycleStart='2026-10-11';state.shiftStart='09:00';state.shiftEnd='21:00';state.lunch=60;state.salarySettings={salaryRate:28000,fuelRate:74,rent:15000,yearBonus:5000,takeHomeRate:87,bonusRate:10,bonus:'no',deal:0,fuelCard:0,firstPay:0,connectionsSolo:0,connectionsPair:0,normHours:160,soloCoeff:1,pairCoeff:0.5,baseRate:650,threshold1:24,add1:100,threshold2:34,add2:150};syncSettingsForm();const persisted=saveState();render();loadEditor();syncAndroidAlarms();if(salaryFrame.contentWindow)salaryFrame.contentWindow.postMessage({type:'salary-settings',values:salarySettingsPayload()},'*');$('settingsMessage').textContent='Исходные параметры восстановлены. '+(persisted?'Сохранены.':'')});
+window.addEventListener('message',e=>{if(!e.data)return;if(e.data.type==='salary-ready'){salaryFrame.contentWindow.postMessage({type:'salary-settings',values:salarySettingsPayload()},'*');salaryFrame.contentWindow.postMessage({type:'shift-hours',hours:monthMinutes(viewYear,viewMonth)/60,period:`${viewYear}-${pad(viewMonth+1)}`},'*')}else if(e.data.type==='salary-values'&&e.data.values){const v=e.data.values;const map={salaryRate:'salaryRate',deal:'deal',connectionsSolo:'connectionsSolo',connectionsPair:'connectionsPair',bonus:'bonus',bonusRate:'bonusRate',fuelRate:'fuelRate',rent:'rent',yearBonus:'yearBonus',fuelCard:'fuelCard',takeHomeRate:'takeHomeRate',firstPay:'firstPay',normHours:'normHours',soloCoeff:'soloCoeff',pairCoeff:'pairCoeff',baseRate:'baseRate',threshold1:'threshold1',add1:'add1',threshold2:'threshold2',add2:'add2'};for(const [key,id] of Object.entries(map))if(v[id]!==undefined)state.salarySettings[key]=key==='bonus'?v[id]:Number(v[id])||0;saveState();syncSettingsForm()}});
+})();
+</script>
+</body>
+</html>
