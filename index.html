@@ -387,6 +387,50 @@ button.primary { background:var(--accent); color:white; border-color:transparent
   tr, .report-payout, .report-total { break-inside:avoid; }
 }
 
+
+/* Обновлённый мобильный интерфейс калькулятора */
+:root {
+  --bg: #f3f6fb !important;
+  --panel: #ffffff !important;
+  --text: #172338 !important;
+  --muted: #68778d !important;
+  --border: #dce5f0 !important;
+  --accent: #315fe8 !important;
+  --input: #f8faff !important;
+  --green: #e5f7ee !important;
+}
+body { background: linear-gradient(180deg,#eaf1ff 0,#f5f7fb 190px,#f3f6fb 100%) !important; color:var(--text) !important; }
+main { max-width:760px !important; padding:18px 12px 30px !important; }
+header { background:linear-gradient(135deg,#2449bd,#4778f5) !important; color:#fff !important; padding:22px 20px !important; border-radius:22px !important; margin:0 0 16px !important; box-shadow:0 10px 26px #315fe82b !important; }
+header .subtitle { color:#e4ebff !important; }
+h1 { font-size:clamp(25px,6vw,34px) !important; letter-spacing:-.7px !important; }
+.layout { grid-template-columns:minmax(0,1fr) !important; gap:14px !important; }
+.panel { background:#fff !important; border:1px solid #dce5f0 !important; border-radius:18px !important; padding:17px !important; box-shadow:0 5px 18px #20385c0b !important; }
+h2 { color:#1c2b45 !important; font-size:18px !important; margin-bottom:14px !important; }
+.field { grid-template-columns:minmax(0,1fr) minmax(108px,40%) !important; gap:10px !important; margin:13px 0 !important; }
+.field label { font-size:14px !important; line-height:1.35 !important; }
+input:not([type=checkbox]), select { min-height:44px !important; width:100% !important; border:1px solid #d4deec !important; border-radius:12px !important; background:#f8faff !important; color:#172338 !important; padding:9px 11px !important; font-size:16px !important; }
+input[type=checkbox] { accent-color:#315fe8 !important; }
+button, .btn { min-height:44px !important; border-radius:12px !important; font-weight:650 !important; transition:transform .12s ease,background .12s ease !important; }
+button:active, .btn:active { transform:scale(.985) !important; }
+button.primary, .btn.primary, #calculate, #print { background:#315fe8 !important; color:#fff !important; border-color:#315fe8 !important; }
+.hint, .subtitle { line-height:1.4 !important; }
+.section + .section { margin-top:20px !important; padding-top:18px !important; border-top:1px solid #e4eaf3 !important; }
+@media(max-width:560px) {
+  main { padding:12px 9px 24px !important; }
+  header { padding:19px 16px !important; border-radius:18px !important; }
+  .panel { padding:14px !important; border-radius:16px !important; }
+  .field { grid-template-columns:minmax(0,1fr) minmax(100px,39%) !important; gap:8px !important; }
+  .field label { font-size:13px !important; }
+}
+@media(prefers-color-scheme:dark) {
+  body { background:#101827 !important; color:#edf3ff !important; }
+  .panel { background:#182235 !important; border-color:#2d3b52 !important; }
+  h2 { color:#edf3ff !important; }
+  input:not([type=checkbox]), select { background:#101827 !important; color:#edf3ff !important; border-color:#394963 !important; }
+  .section + .section { border-color:#2d3b52 !important; }
+}
+
 &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
