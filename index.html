@@ -727,7 +727,7 @@ if(window.parent!==window)window.parent.postMessage({type:&#x27;salary-ready&#x2
 <script>
 (()=>{
 const $=id=>document.getElementById(id);
-const today=new Date(); let viewYear=2026,viewMonth=9;let selectedDate=new Date(2026,9,11);
+const today=new Date(); let viewYear=today.getFullYear(),viewMonth=today.getMonth();let selectedDate=new Date(today.getFullYear(),today.getMonth(),today.getDate());
 const STORAGE='shiftCalendar3x2_v1';
 let state={cycleStart:'2026-10-11',workDays:3,offDays:2,shiftStart:'09:00',shiftEnd:'21:00',lunch:60,overrides:{},vacation:null,alarmEnabled:false,alarmLead:30,salarySettings:{salaryRate:28000,fuelRate:74,yearBonus:5000,takeHomeRate:87,bonusRate:10,bonus:'no',deal:0,fuelCard:0,firstPay:0,connectionsSolo:0,connectionsPair:0,volsSolo:0,volsPair:0,normHours:160,soloCoeff:1,pairCoeff:0.5,baseRate:650,threshold1:24,add1:100,threshold2:34,add2:150}};
 try{const saved=JSON.parse(localStorage.getItem(STORAGE)||'null');if(saved&&typeof saved==='object'){state={...state,...saved,overrides:saved.overrides||{},vacation:saved.vacation||null,salarySettings:{...state.salarySettings,...(saved.salarySettings||{})}}}}catch(e){}
