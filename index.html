@@ -731,6 +731,8 @@ const today=new Date(); let viewYear=today.getFullYear(),viewMonth=today.getMont
 const STORAGE='shiftCalendar3x2_v1';
 let state={cycleStart:'2026-10-11',workDays:3,offDays:2,shiftStart:'09:00',shiftEnd:'21:00',lunch:60,overrides:{},vacation:null,alarmEnabled:false,alarmLead:30,salarySettings:{salaryRate:28000,fuelRate:74,yearBonus:5000,takeHomeRate:87,bonusRate:10,bonus:'no',deal:0,fuelCard:0,firstPay:0,connectionsSolo:0,connectionsPair:0,volsSolo:0,volsPair:0,normHours:160,soloCoeff:1,pairCoeff:0.5,baseRate:650,threshold1:24,add1:100,threshold2:34,add2:150}};
 try{const saved=JSON.parse(localStorage.getItem(STORAGE)||'null');if(saved&&typeof saved==='object'){state={...state,...saved,overrides:saved.overrides||{},vacation:saved.vacation||null,salarySettings:{...state.salarySettings,...(saved.salarySettings||{})}}}}catch(e){}
+const migrateFuelRate=Number(state.salarySettings?.fuelRate)===101;
+if(migrateFuelRate)state.salarySettings.fuelRate=74;
 if(state.salarySettings)delete state.salarySettings.rent;
 $('cycleStart').value=state.cycleStart;
 const cfgDefaults={workDays:3,offDays:2,shiftStart:'09:00',shiftEnd:'21:00',lunch:60};
@@ -742,6 +744,7 @@ const key=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
 const parseKey=s=>{const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)};
 const fmtDate=d=>d.toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'});
 const saveState=()=>{try{localStorage.setItem(STORAGE,JSON.stringify(state));return true}catch(e){return false}}
+if(migrateFuelRate)saveState();
 function showStatus(message,error=false){const el=$('statusMessage');if(!el)return;el.textContent=message;el.className='status show'+(error?' error':'')}
 function scrollToEditor(){if(window.matchMedia('(max-width:760px)').matches){$('editor').scrollIntoView({behavior:'smooth',block:'start'})}}
 function cycleType(date){const a=parseKey(state.cycleStart);const b=new Date(date.getFullYear(),date.getMonth(),date.getDate());const diff=Math.round((b-a)/86400000);const work=Math.max(1,Number(state.workDays)||3),off=Math.max(1,Number(state.offDays)||2),cycle=work+off;const phase=((diff%cycle)+cycle)%cycle;return phase<work?'work':'off'}
